@@ -1,0 +1,16 @@
+.price{
+  font-size: 30px;
+  font-weight: 100;
+}
+.price::first-letter{
+  font-size: 50px;
+  font-weight: bolder;
+}
+
+.cont-card{
+  box-shadow: .5px .5px 5px 0px #000;
+}
+
+.text_inventary{
+  color: red;
+}

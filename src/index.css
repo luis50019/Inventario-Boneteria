@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+  font-family: 'Radio Canada';
+}
+
+.cont{
+  max-height: 100vh;
+  max-width: 80vw;
+}
+
+.cont-graph{
+  max-width: 80vw;
+}
+
+.text-span{
+  font-size: 7px;
+  font-weight: 300;
+}
+
+input{
+  outline: none;
+  max-height: 35px;
+}
