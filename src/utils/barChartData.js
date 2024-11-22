@@ -15,9 +15,9 @@ export const options = {
     legend: {
       display: true,
       labels: {
-        boxWidth: 10,
+        boxWidth: 20,
         boxHeight: 15,
-        padding: 1,
+        padding: 5,
         font: {
           size: 5,
         },

@@ -19,12 +19,12 @@ export default function HomePage(){
      </Header>
      <Search />
      <Graph />
-{/* 
+
      <div className='flex justify-between mt-11 mb-10 w-full h-48'>
        {fakeValues.map((info, index) => (
          <CardsInfo titleCard={info.title} valor={info.valor} key={index} />
        ))}
-     </div> */}
+     </div>
    </div>
  );
 }

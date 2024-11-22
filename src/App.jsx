@@ -4,7 +4,7 @@ import NavBar from './components/NavBar';
 function App() {
   
   return (
-   <div className='cont border-2 pl-5 pt-5 relative'>
+   <div className='container cont mx-auto pl-5 pt-5 relative'>
     <HomePage />
     <NavBar/>
    </div>
