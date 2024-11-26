@@ -10,19 +10,19 @@ export function CardsInfo({ valor, titleCard}) {
   return (
     <div
       className={`
-        rounded-md h-full w-42 text-center ${color ? "bg-title" : "bg-[#fff]"}
-        flex flex-col gap-2 p-2 cont-card pt-3 
+        rounded-xl h-52 min-w-40 max-w-40 text-center ${color ? "bg-title" : "bg-[#fff]"}
+        flex flex-col gap-2 p-2 cont-card pt-3
         `}
     >
       <p
         className={`${
           color ? "text-[#fff]" : "text-title"
-        } h-14 max-w-28 text-base`}
+        } h-14  text-center w-full text-xl font-semibold`}
       >
         {titleCard}
       </p>
       <span
-        className={`${color ? "text-[#fff]" : "text-title"} price text-wrap`}
+        className={`${color ? "text-[#fff]" : "text-title"} mt-5 price text-wrap`}
       >
         $ {valor}
       </span>

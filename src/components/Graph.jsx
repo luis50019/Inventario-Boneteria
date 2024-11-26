@@ -20,11 +20,11 @@ export function Graph(){
   
   return (
     <>
-      <div className='mt-5 w-32'>
-        <h2 className='font-bold text-xs'>Resumen de ventas</h2>
+      <div className='mt-10 ml-2 w-54'>
+        <h2 className='font-bold text-2xs'>Resumen de ventas</h2>
         <p className='text-span max-w-full'>Consulta el rendimiento de tus productos y ventas.</p>
       </div>
-      <div className='cont-graph mt-3 h-64'>
+      <div className='cont-graph mt-3 h-80'>
         <Bar options={options} data={barData} />
       </div>
     </>

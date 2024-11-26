@@ -1,8 +1,21 @@
-# React + Vite
+## tareas para la noche para la app de boneteria Sofy
+  1._ CREAR DOS CONTEXTOS
+    1._ crear un contexto general( para consultas muy generales)
+      - obtener estadisticas
+      - obtener al usuario que entro
+      - obetener informacion sobre el inveantario
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+    2._Crear un contexto para el inventario
+      - debera contener las siguientes funciones
+        - actualizar un porducto
+        - obetner un producto especifico
+        - registrar un nuevo producto
+        - obtener producto de un tipo en especifico
+        - buscar producto
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+    3._ Crear un contexto para las ventas
+      - registrar ventas
+      - buscar un venta
+
+

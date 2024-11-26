@@ -5,22 +5,26 @@ import {Search} from '../components/Search.jsx'
 import { CardsInfo } from '../components/CardsInfo.jsx';
 import { fakeValues } from '../api/fakeValues.js';
 
+import { UseContextApp } from '../context/AppContext.jsx';
+
 export default function HomePage(){
+  
+
+
  return (
-   <div className='pb-12 w-80'>
+   <div className="pb-12 max-w-[95%]">
      <Header
-       title={'¡Estamos listos para ayudarte!'}
-       namePage={'Inicio'}
+       title={"¡Estamos listos para ayudarte!"}
+       namePage={"Inicio"}
        caption={
-         'Aquí podrás gestionar, actualizar y revisar el estado de tus productos fácilmente'
+         "Aquí podrás gestionar, actualizar y revisar el estado de tus productos fácilmente"
        }
      >
-       <GoHome className='text-4xl' />
+       <GoHome className="text-4xl" />
      </Header>
-     <Search />
      <Graph />
 
-     <div className='flex justify-between mt-11 mb-10 w-full h-48'>
+     <div className="mt-5 max-w-[95%] grid min-h-56 grid-cols-[repeat(auto-fit,minmax(160px,1fr))] place-items-center gap-4">
        {fakeValues.map((info, index) => (
          <CardsInfo titleCard={info.title} valor={info.valor} key={index} />
        ))}

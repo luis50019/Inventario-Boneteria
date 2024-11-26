@@ -15,11 +15,11 @@ export const options = {
     legend: {
       display: true,
       labels: {
-        boxWidth: 20,
-        boxHeight: 15,
+        boxWidth: 25,
+        boxHeight: 25,
         padding: 5,
         font: {
-          size: 5,
+          size: 15,
         },
       },
     },
@@ -33,7 +33,7 @@ export const options = {
       },
       ticks: {
         font: {
-          size: 7,
+          size: 12,
         },
         color: "#000",
         maxRotation: 90,
@@ -47,7 +47,7 @@ export const options = {
       ticks: {
         callback: (value) => `$${value}`,
         font: {
-          size: 7,
+          size: 12,
         },
         color: "#000",
       },
