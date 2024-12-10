@@ -2,7 +2,7 @@ import { Suspense,lazy, useEffect } from 'react';
 
 import { Routes, Route } from 'react-router';
 
-const HomePage = './pages/Home.jsx';
+import HomePage from './pages/Home';
 const InventaryPage = lazy(()=>import('./pages/Inventary'));
 const SalePage = lazy(()=>import('./pages/Sale'));
 import NavBar from './components/NavBar';
