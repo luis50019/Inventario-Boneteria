@@ -30,7 +30,7 @@ export default function HomePage(){
       </Header>
       {
         isLoading?(<div>cargando ..</div>):(
-          <Graph infoStadistic={data||{}}/>
+          <Graph infoStadistic={data} />
         )
       }
 

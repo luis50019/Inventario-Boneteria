@@ -19,7 +19,7 @@ export const options = {
         boxHeight: 25,
         padding: 5,
         font: {
-          size: 15,
+          size: 12,
         },
       },
     },

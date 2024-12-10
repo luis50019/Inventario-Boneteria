@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { getStadisticGeneral } from "../api/statistics";
+import { getStadisticGeneral } from "../api/statistics.js";
 const AppContext = createContext(); 
 
 export const UseContextApp = ()=> useContext(AppContext);

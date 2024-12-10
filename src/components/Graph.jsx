@@ -20,7 +20,7 @@ ChartJS.register(
 export function Graph({infoStadistic}){
   useEffect(()=>{
     console.log(infoStadistic);
-  },[])
+  },[infoStadistic])
   return (
     <>
       <div className='mt-10 ml-2 w-54'>
