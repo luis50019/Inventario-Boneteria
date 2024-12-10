@@ -7,6 +7,7 @@ import { Chart as ChartJS,
   Title,
   Tooltip,
  } from 'chart.js'
+import { useEffect } from 'react';
 
 ChartJS.register(
   CategoryScale,
@@ -16,8 +17,10 @@ ChartJS.register(
   Tooltip,
 )
 
-export function Graph(){
-  
+export function Graph({infoStadistic}){
+  useEffect(()=>{
+    console.log(infoStadistic);
+  },[])
   return (
     <>
       <div className='mt-10 ml-2 w-54'>
@@ -25,7 +28,7 @@ export function Graph(){
         <p className='text-span max-w-full'>Consulta el rendimiento de tus productos y ventas.</p>
       </div>
       <div className='cont-graph mt-3 h-80'>
-        <Bar options={options} data={barData} />
+        <Bar options={options} data={infoStadistic} />
       </div>
     </>
   );
