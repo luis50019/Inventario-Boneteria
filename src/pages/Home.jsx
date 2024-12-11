@@ -10,10 +10,10 @@ import { useEffect, useState } from 'react';
 
 export default function HomePage(){
   
-  const { getStadistics,data,isLoading } = UseContextApp();
-  useEffect(()=>{
-    getStadistics()
-  },[])
+  const { isLoading } = UseContextApp();
+  // useEffect( ()=>{
+  //    getStadistics()
+  // },[])
 
  return (
    <>
@@ -28,12 +28,7 @@ export default function HomePage(){
       >
       <GoHome className="text-4xl" />
       </Header>
-      {
-        isLoading?(<div>cargando ..</div>):(
-          <Graph infoStadistic={data} />
-        )
-      }
-
+      <Graph/>
       <div className="mt-5 max-w-[95%] grid min-h-56 grid-cols-[repeat(auto-fit,minmax(160px,1fr))] place-items-center gap-4">
         {fakeValues.map((info, index) => (
           <CardsInfo titleCard={info.title} valor={info.valor} key={index} />
