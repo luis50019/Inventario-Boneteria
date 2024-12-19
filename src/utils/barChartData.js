@@ -3,7 +3,7 @@ export const barData = {
   datasets :[
     {
       data:[1200,500,400,300,800],
-      backgroundColor:["rgb(247,140,148)"],
+      backgroundColor:["rgb(0,0,0)"],
       borderColor:["rgb(247,140,148)"],
       borderWidth:5,
     }

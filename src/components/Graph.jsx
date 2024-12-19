@@ -32,7 +32,7 @@ export function Graph() {
             {
               label: "Ventas",
               data: [...dataStadistic.datasets[0].data] || [],
-              backgroundColor: "rgba(75, 192, 192, 0.6)",
+              backgroundColor: "rgb(0,0,0)",
             },
           ],
         });
@@ -56,11 +56,9 @@ export function Graph() {
       <div className="cont-graph mt-3 h-80 max-h-80">
         {isLoading ? (
           <div>Cargando ...</div>
-        ) : chartData.labels.length > 0 ? (
-          <Bar options={options} data={chartData} />
         ) : (
-          <div>No hay datos disponibles</div>
-        )}
+          <Bar options={options} data={chartData} />
+        ) }
       </div>
     </>
   );

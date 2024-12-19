@@ -2,18 +2,30 @@ import { Graph } from '../components/Graph.jsx';
 import { Header } from '../components/Header.jsx'
 import { GoHome } from 'react-icons/go';
 import {Search} from '../components/Search.jsx'
+import {getAllClothing} from '../api/api.js'
 import { CardsInfo } from '../components/CardsInfo.jsx';
 import { fakeValues } from '../api/fakeValues.js';
 
 import { UseContextApp } from '../context/AppContext.jsx';
 import { useEffect, useState } from 'react';
+import { data } from 'autoprefixer';
 
 export default function HomePage(){
   
   const { isLoading } = UseContextApp();
-  // useEffect( ()=>{
-  //    getStadistics()
-  // },[])
+  const [product, setProduct] = useState([]);
+  useEffect( ()=>{
+    const getData =async()=>{
+      try{
+        const res = await getAllClothing();
+        console.log(res);
+        setProduct(res);
+      }catch(e){
+        console.log(e);
+      }
+    }
+    getData()
+  },[])
 
  return (
    <>
@@ -30,9 +42,14 @@ export default function HomePage(){
       </Header>
       <Graph/>
       <div className="mt-5 max-w-[95%] grid min-h-56 grid-cols-[repeat(auto-fit,minmax(160px,1fr))] place-items-center gap-4">
-        {fakeValues.map((info, index) => (
+        {
+          product?product.map(item=>(
+            <span>{item.productName}</span>
+          )):"sindatos"
+        }
+        {/* {fakeValues.map((info, index) => (
           <CardsInfo titleCard={info.title} valor={info.valor} key={index} />
-        ))}
+        ))} */}
       </div>
    </div>
    </>
