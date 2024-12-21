@@ -40,11 +40,20 @@ export default function HomePage(){
       <GoHome className="text-4xl" />
       </Header>
       <Graph/>
-      <div className="mt-5 max-w-[95%] grid min-h-56 grid-cols-[repeat(auto-fit,minmax(160px,1fr))] place-items-center gap-4">
+      <div>
+      {
+          product?.map((product,index)=>(
+            <div key={index}>
+              <p>{product.productName}</p>
+            </div>
+          ))
+        }
+      </div>
+      {/*<div className="mt-5 max-w-[95%] grid min-h-56 grid-cols-[repeat(auto-fit,minmax(160px,1fr))] place-items-center gap-4">
          {fakeValues.map((info, index) => (
           <CardsInfo titleCard={info.title} valor={info.valor} key={index} />
         ))} 
-      </div>
+      </div>*/}
    </div>
    </>
  );
