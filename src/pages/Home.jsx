@@ -8,7 +8,6 @@ import { fakeValues } from '../api/fakeValues.js';
 
 import { UseContextApp } from '../context/AppContext.jsx';
 import { useEffect, useState } from 'react';
-import { data } from 'autoprefixer';
 
 export default function HomePage(){
   
@@ -42,14 +41,9 @@ export default function HomePage(){
       </Header>
       <Graph/>
       <div className="mt-5 max-w-[95%] grid min-h-56 grid-cols-[repeat(auto-fit,minmax(160px,1fr))] place-items-center gap-4">
-        {
-          product?product.map(item=>(
-            <span>{item.productName}</span>
-          )):"sindatos"
-        }
-        {/* {fakeValues.map((info, index) => (
+         {fakeValues.map((info, index) => (
           <CardsInfo titleCard={info.title} valor={info.valor} key={index} />
-        ))} */}
+        ))} 
       </div>
    </div>
    </>

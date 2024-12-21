@@ -27,11 +27,10 @@ export function Graph() {
         const dataStadistic = await getStadistics();
         console.log(dataStadistic);
         setChartData({
-          labels: [...dataStadistic.labels] || [],
+          labels: [dataStadistic[0].lastSale] || ["Miercoles"],
           datasets: [
             {
-              label: "Ventas",
-              data: [...dataStadistic.datasets[0].data] || [],
+              data: [dataStadistic[0].totalProfit] || [100],
               backgroundColor: "rgb(0,0,0)",
             },
           ],
