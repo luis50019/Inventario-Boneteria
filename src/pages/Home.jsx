@@ -39,7 +39,7 @@ export default function HomePage(){
       >
       <GoHome className="text-4xl" />
       </Header>
-      <Graph/>
+      
       <div>
       {
           product?.map((product,index)=>(
