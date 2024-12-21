@@ -10,7 +10,7 @@ export function AppProvider({children}){
 
   const getStadistics = async ()=>{
     try {
-      const res = await fetch("http://localhost:4000/stadisctic");
+      const res = await fetch("https://backendappboneteriac.onrender.com/stadisctic");
       const data = await  res.json();
       return data
       
