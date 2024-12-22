@@ -43,7 +43,7 @@ export default function HomePage(){
       {
           product?.map((product,index)=>(
             <div key={index}>
-              <p>{product.name}</p>
+              <p>{product.productName}</p>
             </div>
           ))
         }
