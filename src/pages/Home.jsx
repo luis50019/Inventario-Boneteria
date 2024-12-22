@@ -39,12 +39,11 @@ export default function HomePage(){
       >
       <GoHome className="text-4xl" />
       </Header>
-      
       <div>
       {
           product?.map((product,index)=>(
             <div key={index}>
-              <p>{product.productName}</p>
+              <p>{product.name}</p>
             </div>
           ))
         }
