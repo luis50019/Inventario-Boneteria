@@ -10,8 +10,10 @@ export function AppProvider({children}){
 
   const getStadistics = async ()=>{
     try {
-      const res = await fetch("https://backendappboneteriac.onrender.com/stadisctic");
+      //const res = await fetch("https://backendappboneteriac.onrender.com/stadisctic");
+      const res = await fetch("https://backendboneteria.onrender.com/");
       const data = await  res.json();
+      console.log(data)
       return data
       
     } catch (error) {
