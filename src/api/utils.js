@@ -1,3 +1,3 @@
-export const URL_BASE_SERVER = "http://localhost:3030/";
+export const URL_BASE_SERVER = "https://backendappboneteriac.onrender.com/";
 
 

@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { getStadisticGeneral } from "../api/statistics.js";
+import { getStadisticGeneral, InfoInventary } from "../api/statistics.js";
 const AppContext = createContext(); 
 
 export const UseContextApp = ()=> useContext(AppContext);
@@ -7,15 +7,28 @@ export const UseContextApp = ()=> useContext(AppContext);
 export function AppProvider({children}){
 
   const [isLoading,setLoading] = useState(false);
+  const [error,setError] = useState(null);
 
   const getStadistics = async ()=>{
     try {
-      const res = await fetch("https://backendappboneteriac.onrender.com/stadisctic");
-      //const res = await fetch("https://backendboneteria.onrender.com/");
-      const data = await  res.json();
-      console.log(data)
-      return data
+      setLoading(true);
+      const data = await getStadisticGeneral();
       
+      return data.data
+      
+    } catch (error) {
+      setError(error);
+    }finally{
+      setLoading(false);
+    }
+  }
+
+  const getInfoInventary = async ()=>{
+    try {
+      setLoading(true);
+      const data = await InfoInventary();
+      console.log(data);
+      return data.data[0];
     } catch (error) {
       console.log(error);
     }finally{
@@ -26,11 +39,11 @@ export function AppProvider({children}){
   return(
     <AppContext.Provider value={{
       getStadistics,
+      getInfoInventary,
       isLoading
     }}>
       {children}
     </AppContext.Provider>
-
   )
 }
 

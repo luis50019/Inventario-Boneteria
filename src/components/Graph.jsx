@@ -1,6 +1,7 @@
 import { UseContextApp } from "../context/AppContext";
 import { Bar } from "react-chartjs-2";
 import { options } from "../utils/barChartData";
+import { barData } from "../utils/barChartData";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -24,17 +25,9 @@ export function Graph() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setIsLoading(true);
         const dataStadistic = await getStadistics();
-        console.log(dataStadistic);
-        setChartData({
-          labels: [dataStadistic[0].lastSale] || ["Miercoles"],
-          datasets: [
-            {
-              data: [dataStadistic[0].totalProfit] || [100],
-              backgroundColor: "rgb(0,0,0)",
-            },
-          ],
-        });
+        setChartData(dataStadistic)
         setIsLoading(false);
       } catch (e) {
         console.error("Error fetching statistics:", e);
@@ -42,7 +35,7 @@ export function Graph() {
       }
     };
     fetchData();
-  }, [getStadistics]);
+  }, []);
 
   return (
     <>

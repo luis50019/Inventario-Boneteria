@@ -3,7 +3,7 @@ export const barData = {
   datasets :[
     {
       data:[1200,500,400,300,800],
-      backgroundColor:["rgb(0,0,0)"],
+      backgroundColor:["rgb(247,140,148)"],
       borderColor:["rgb(247,140,148)"],
       borderWidth:5,
     }
@@ -26,14 +26,15 @@ export const options = {
   },
   scales: {
     x: {
-      barPercentage: 5,
+      barPercentage: 8,
       categoryPercentage: 0.8,
       grid: {
         display: false,
       },
       ticks: {
+        display:false,
         font: {
-          size: 12,
+          size: 5,
         },
         color: "#000",
         maxRotation: 90,
