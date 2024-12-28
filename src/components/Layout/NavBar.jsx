@@ -21,7 +21,7 @@ function NavBar() {
           <LuShoppingCart className="text-3xl" />
         </button>
       </Link>
-      <Link to='/inventary'>
+      <Link to='/Inventary'>
         <button className="bg-[#ffffff] shadow-sm shadow-[#333] font-extrabold rounded-full w-16 h-16 p-4">
           <MdOutlineInventory2 className=" text-3xl" />
         </button>

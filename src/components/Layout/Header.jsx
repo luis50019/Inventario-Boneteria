@@ -1,10 +1,14 @@
 
-export const Header = ({ title = '',children ,namePage ='',caption =''}) => {
+export const Header = ({ title = '',children ,namePage ='',caption ='',path =""}) => {
   return (
     <>
       <div className='pl-2 flex gap-3 font-semibold items-end h-10 max-w-64 mb-4'>
         {children}
-        <span className='font-light text-2xl'>{namePage}</span>
+        {
+          namePage && (
+            <span className='font-light text-2xl'>{namePage}</span>
+          )
+        }
       </div>
       <h1
         className=' pl-2

@@ -1,47 +1,36 @@
-import { Graph } from '../components/Graph.jsx';
-import { Header } from '../components/Header.jsx'
+import { Graph } from '../components/UI/Graph.jsx';
+import { Header } from '../components/Layout/Header.jsx'
 import { GoHome } from 'react-icons/go';
-import { CardsInfo } from '../components/CardsInfo.jsx';
-import { fakeValues } from '../api/fakeValues.js';
-import { UseContextApp } from '../context/AppContext.jsx';
-import { useEffect, useState } from 'react';
-
+import { CardsInfo } from '../components/Cards/CardsInfo.jsx';
+import { useInfoInventary } from '../hooks/useInfoInventary.js';
+import { headerInfo } from '../utils/headerInfo.js';
 export default function HomePage(){
   
-  const{getInfoInventary}= UseContextApp();
-  const [InfoInventary, setInfoInventary] = useState({});
-  const [error, setError] = useState(null);
-
-  useEffect(()=>{
-    const fetchData = async ()=>{
-      try {
-        const data = await getInfoInventary();
-        setInfoInventary(data);
-      } catch (error) {
-        setError(error);
-      }
-    }
-    fetchData();
-  },[])
+  const {InfoInventary, errorInfo, isLoadingInfo} = useInfoInventary(); 
 
  return (
-   <>
-      <div className="pb-12 max-w-[95%]">
+  <>
+    <div className="pb-12 max-w-[95%]">
       <Header
-       title={"¡Estamos listos para ayudarte!"}
-       namePage={"Inicio"}
-       caption={
-         "Aquí podrás gestionar, actualizar y revisar el estado de tus productos fácilmente"
-       }
+       title={headerInfo.Home.title}
+       namePage={headerInfo.Home.namePage}
+       caption={headerInfo.Home.caption}
       >
       <GoHome className="text-4xl" />
       </Header>
       <Graph/>
-      <div className="mt-5 max-w-[95%] grid min-h-56 grid-cols-[repeat(auto-fit,minmax(160px,1fr))] place-items-center gap-4">
-        <CardsInfo valor={InfoInventary.totalSales} titleCard={"Total de ventas"} />
-        <CardsInfo valor={InfoInventary.totalProfit} titleCard={"Ganancias totales"} />
-      </div>
-   </div>
-   </>
+      {
+        isLoadingInfo? <p>Cargando Datos del inventario...</p>:<>
+        <div className="mt-5 max-w-[95%] grid min-h-56 grid-cols-[repeat(auto-fit,minmax(160px,1fr))] place-items-center gap-4">
+          {
+            errorInfo ? <p>{errorInfo}</p>: InfoInventary.slice(0,2).map(({title,value},index)=>(
+              <CardsInfo key={index} titleCard={title} valor={value}/>
+            ))
+          }
+        </div>
+      </>
+      }
+    </div>
+  </>
  );
 }

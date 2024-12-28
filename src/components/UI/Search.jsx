@@ -1,5 +1,5 @@
 import { FaSearch } from 'react-icons/fa';
-import '../styles/Search.css';
+import '../../styles/Search.css';
 export function Search({placeholder}) {
   return (
     <>

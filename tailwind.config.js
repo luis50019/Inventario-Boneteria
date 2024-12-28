@@ -2,7 +2,11 @@
 export default {
   content: ['./index.html', './src/**/*.{js,jsx}'],
   theme: {
-    extend: {},
+    extend: {
+      height:{
+        'slider-normal':'22rem'
+      }
+    },
     colors: {
       title: '#2B1B42',
     },

@@ -1,36 +1,50 @@
-import React, { useEffect } from "react";
-import { Header } from "../components/Header";
-import { Search } from "../components/Search";
-import { CardsInfo } from "../components/CardsInfo.jsx";
-import Slider from "../components/Slider.jsx";
+import React from "react";
 import "../styles/CardInfo.css";
 
-import { MdOutlineInventory2 } from "react-icons/md";
-import { fakeStadistics } from "../api/fakeValues.js";
-import { getAllClothing } from "../api/api.js";
-export default function Inventary() {
+import { useAllProducts } from "../hooks/useAllProducts.js";
+import { useInfoInventary } from "../hooks/useInfoInventary.js";
 
-  useEffect(()=>{
-    getAllClothing()
-  },[])
+import { Search } from "../components/UI/Search.jsx";
+import { CardsInfo } from "../components/Cards/CardsInfo.jsx";
+import Slider from "../components/Sliders/Slider.jsx";
+import TopProductSlider from "../components/Sliders/TopProductSlider.jsx";
+import ProductManagement from "../components/Management/ProductManagement.jsx";
+import ProductsAboutToEndSlider from "../components/Sliders/ProductsAboutToEndSlider.jsx";
+
+export default function Inventary() {
+  const { InfoInventary, errorInfo, isLoadingInfo } = useInfoInventary();
+  const { products, errorProducts,loadigProducts } = useAllProducts();
 
   return (
-    <div className="pb-12 h-[100vh] max-w-[95%]">
-      <Header
-        title="Bienvenido a tu inventario"
-        caption="Aquí podrás gestionar, actualizar y revisar el estado de tus productos fácilmente"
-        namePage="Inventario"
-      >
-        <MdOutlineInventory2 className="text-4xl" />
-      </Header>
-      
-      <Search placeholder='calceta deportica,llavero marvel, llavero de plastico ...'/>
-
-      <Slider>
-        {fakeStadistics.map((info, index) => (
-          <CardsInfo titleCard={info.title} valor={info.valor} key={index} />
-        ))}
+    <>
+      <Search placeholder="calceta deportica,llavero marvel, llavero de plastico ..." />
+      <Slider height={"64"}>
+        {isLoadingInfo ? (
+          <p className="text-xl h-full pt-28 font-extralight">Cargando Informacion del inventario...</p>
+        ) : errorInfo ? (
+          <p>{errorInfo}</p>
+        ) : (
+          InfoInventary?.slice(0, InfoInventary.length - 1)?.map(
+            ({ title, value }, index) => (
+              <CardsInfo titleCard={title} valor={value} key={index} />
+            )
+          )
+        )}
       </Slider>
-    </div>
+
+      {
+        products.productsTop?(
+          <TopProductSlider products={products.productsTop} />
+        ):<p className="text-xl font-extralight h-[22rem]">Cargando los productos mas vendidos</p>
+      }
+      {products.productsAboutToEnd && (
+        <ProductsAboutToEndSlider products={products.productsAboutToEnd} />
+      )}
+      {
+        products.allProducts?(
+          <ProductManagement products={products.allProducts} />
+        ):<p className="text-xl font-extralight h-64">Cargando los productos</p>
+      }
+    </>
   );
 }

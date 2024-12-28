@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import '../styles/CardInfo.css'
+import '../../styles/CardInfo.css'
 
 export function CardsInfo({ valor, titleCard}) {
   const [color, setColor] = useState(()=>{
@@ -11,7 +11,7 @@ export function CardsInfo({ valor, titleCard}) {
     <div
       className={`
         rounded-xl h-52 min-w-40 max-w-40 text-center ${color ? "bg-title" : "bg-[#fff]"}
-        flex flex-col gap-2 p-2 cont-card pt-3
+        flex flex-col gap-2 p-2 cont-card pt-3 mb-3
         `}
     >
       <p

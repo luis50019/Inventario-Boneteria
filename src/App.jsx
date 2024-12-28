@@ -1,11 +1,16 @@
-import { Suspense,lazy, useEffect } from 'react';
+import {lazy } from 'react';
 
 import { Routes, Route } from 'react-router';
 
 import HomePage from './pages/Home';
 const InventaryPage = lazy(()=>import('./pages/Inventary'));
 const SalePage = lazy(()=>import('./pages/Sale'));
-import NavBar from './components/NavBar';
+const NewProduct = lazy(()=> import('./pages/NewProduct'));
+const DashboardInventary = lazy(()=> import('./components/Layout/Dashboard'))
+const Product = lazy(()=> import('./pages/Product'));
+
+import NavBar from './components/Layout/NavBar';
+
 function App() {
   
   return (
@@ -13,7 +18,11 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/Sale" element={<SalePage />} />
-          <Route path="/Inventary" element={<InventaryPage />} />
+          <Route path="/Inventary" element={<DashboardInventary />} >
+            <Route index element={<InventaryPage/>} />
+            <Route path="NewProduct" element={<Product />} />
+            <Route path=":id" element={<Product/>}/>
+          </Route>
         </Routes>
       <NavBar />
     </div>

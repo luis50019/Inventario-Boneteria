@@ -1,0 +1,9 @@
+.inputActive{
+    border-bottom: 1px solid #000000;
+    transition: all 0.5s;
+}
+
+.inputDisable{
+    border:none;
+    color: #000;
+}
