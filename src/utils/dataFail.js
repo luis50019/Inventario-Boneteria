@@ -1,8 +1,22 @@
 export const typesClothing = [
     {
-        'name':"Ropa"
+        'name':"ropa"
     },
     {
         'name':"Llaveros"
-    }
+    },{
+        'name':"L"
+    },
+    {
+        'name':"M"
+    },
+    {
+        'name':"S"
+    },
+    {
+        'name':"XL"
+    },
+    {
+        'name':"XXL"
+    },
 ]

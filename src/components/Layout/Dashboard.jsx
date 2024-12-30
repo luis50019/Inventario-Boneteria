@@ -32,7 +32,7 @@ export default function Dashboard() {
           }
         </Header>
         
-        <Outlet/>
+        <Outlet />
       </div>
     </>
   );

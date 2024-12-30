@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { getStadisticGeneral, InfoInventary } from "../api/statistics.js";
-import {getAllProducts, getTopProducts,getProductsAboutToEnd,getProductSpecific} from '../api/products.js'
+import {getAllProducts, getTopProducts,getProductsAboutToEnd,getProductSpecific,addProduct} from '../api/products.js'
 const AppContext = createContext(); 
 
 export const UseContextApp = ()=> useContext(AppContext);
@@ -66,8 +66,15 @@ export function AppProvider({children}){
     }
   }
 
+  const addProductToInventary =async()=>{
+    try {
+      const data = await addProduct();
+      return data.data;
+    } catch (error) {
+      setError('Hubo un error al añadir el producto al inventario');
+    }
 
-
+  }
 
   return(
     <AppContext.Provider value={{
@@ -75,6 +82,7 @@ export function AppProvider({children}){
       getInfoInventary,
       getProducts,
       getProduct,
+      addProductToInventary,
       isLoading,
       error
     }}>

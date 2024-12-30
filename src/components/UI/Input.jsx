@@ -2,8 +2,7 @@ import React, { forwardRef } from "react";
 import "../../styles/Input.css";
 const Input = forwardRef(
   (
-    { label, nameInput,inputDisabled, placeholder, type,defualtvalue="" },
-    ref
+    { label, nameInput,inputDisabled, placeholder, type,defualtvalue="",register },ref
   ) => {
     return (
       <div className="flex flex-col gap-2 min-w-full max-w-full">
@@ -11,11 +10,10 @@ const Input = forwardRef(
         <input
           type={type}
           name={nameInput}
-					ref={ref}
-          className={`${inputDisabled ? "inputDisable" : "inputActive"} pl-2 w-full`}
+					{...register}
+          className={`${inputDisabled ? "inputDisable" : "inputActive"} pl-2 w-full capitalize`}
           placeholder={placeholder}
 					disabled={inputDisabled}
-					defualtValue={defualtvalue}
         />
       </div>
     );
