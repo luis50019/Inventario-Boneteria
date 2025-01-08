@@ -3,9 +3,7 @@ import { useLocation, useParams } from "react-router";
 import { UseContextApp } from "../context/AppContext";
 import ProductForm from "../components/Form/ProductForm";
 
-export default function Product(
-
-) {
+export default function Product() {
   let { id } = useParams();
   let location = useLocation();
 

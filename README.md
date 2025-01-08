@@ -19,3 +19,10 @@
       - buscar un venta
 
 
+
+			<Input
+captureImg?(
+				<div className="w-full rounded-lg h-[40rem] bg-[#f7f6f6] flex flex-col gap-5 justify-center items-center">
+					<img className="w-[90%] h-[35rem]"	src={captureImg}/>
+					<button onClick={handleDeleteImg} className='h-10 pr-5 pl-5 rounded-md bg-[#ff0f0f] text-[#fff] font-bold'>Borrar foto</button>
+				</div>):(<ImageProduct setImg={setCaptureImg}/>)

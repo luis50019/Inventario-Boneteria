@@ -6,14 +6,11 @@ import "../../styles/Input.css";
 import Input from "../UI/Input";
 import { modesForm } from "./utilsForm";
 import { UseContextApp } from "../../context/AppContext";
-import Webcam from "react-webcam";
+import ContImg from "../Layout/ContImg";
+import { Cloudinary } from "@cloudinary/url-gen";
 const URL_IMG =
   "https://w7.pngwing.com/pngs/853/276/png-transparent-gray-crew-neck-shirt-t-shirt-polo-shirt-clothing-grey-t-shirt-tshirt-fashion-active-shirt-thumbnail.png";
 
-const videoConstraints = {
-	width:1280,
-	height:720
-}
 export default function ProductForm({ product, option = "view" }) {
 	const {addProductToInventary} = UseContextApp();
 	const {
@@ -24,17 +21,53 @@ export default function ProductForm({ product, option = "view" }) {
 		control,
 		formState: { error },
 	} = useForm({ defaultValues: { ...product } });
-	const webCamRef = useRef(null)
 	const [isDisabled, setIsDisabled] = useState(true);
+	const [captureImg,setCaptureImg] = useState({img:[],imgLocal:[],opcion:""})
 	const [modeForm,setModeForm] = useState(option)
 	const [functionForm,setFunctionForm] = useState();
-	const [facingMode,setFacingMode] = useState('environment');
-	const onSubmit = (data) => console.log(data);
+
+	const onSubmit = async(data) =>{
+
+		const formData = new FormData();
+
+		formData.append("file",captureImg.img);
+		formData.append("upload_preset","prubaImagenes");
+		try{
+			const response =  await fetch("https://api.cloudinary.com/v1_1/dzqytawx9/image/upload",{
+				method:"POST",
+				body:formData,
+			})
+			const imgCld = await response.json();
+			data.imageUrl= [imgCld.secure_url,imgCld.secure_url]
+			
+			data.availableUnits = parseInt(data.availableUnits);
+			data.dozenPrice = parseFloat(data.dozenPrice)
+			data.maximumAge = parseInt(data.maximumAge);
+			data.minimumAge = parseInt(data.minimumAge);
+			data.purchasePrice = parseFloat(data.purchasePrice);
+			data.unitPrice = parseFloat(data.unitPrice)
+			data.discount = parseFloat(data.discount)
+			data.isSecondHand = data.isSecondHand == "yes"
+			console.log("info",data);
+			
+
+			const res = await addProductToInventary(data)
+			console.log("final",res);
+		}catch(e){
+			console.log(e);
+		}
+	};
 
 	// codigo para tomar la foto
-	const capturee =()=>{
-		const imgSrc = webCamRef.current.getScreenshot();
-		console.log(imgSrc);
+	const selectImg=(img,imgLocal,opcion)=>{
+		setCaptureImg(
+			{
+				img:img,
+				imgLocal:imgLocal,
+				opcion:opcion
+				
+			}
+		)
 	}
 
 	// codigo para vereficar el tipo de operacion que se ralizara
@@ -66,32 +99,21 @@ export default function ProductForm({ product, option = "view" }) {
 		}
 		if(modeForm == "new"){
 			setIsDisabled(false);
-			setFunctionForm((newProduct)=> addProductToInventary(newProduct))
 			reset()
 		}
 	}, [product || modeForm]);
 
+	useEffect(()=>{
+		console.log(captureImg);
+	},[captureImg])
+
 	return (
 		<form
 			onSubmit={handleSubmit(onSubmit)}
-			className="mt-5 pl-2 pb-5 flex flex-col gap-5 min-h-[130vh] max-h[105vh] items-start capitalize"
+			className="mt-5 pl-2 flex flex-col gap-5 min-h-auto pb-32 items-start capitalize"
 		>
 			
-			<Webcam
-				ref={webCamRef}
-				height={360}
-				screenshotFormat="image/png"
-				audio={false}
-				width={720}
-				videoConstraints={
-					{
-						width:1280,
-						height:720,
-						facingMode:'user',
-					}
-				}
-
-			/>
+			<ContImg setCaptureImg={selectImg} img={captureImg}/>
 
 			<Input
 				label="Nombre del producto"

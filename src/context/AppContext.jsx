@@ -66,10 +66,10 @@ export function AppProvider({children}){
     }
   }
 
-  const addProductToInventary =async()=>{
+  const addProductToInventary =async(dataProduct)=>{
     try {
-      const data = await addProduct();
-      return data.data;
+      const data = await addProduct(dataProduct);
+      return data;
     } catch (error) {
       setError('Hubo un error al añadir el producto al inventario');
     }
