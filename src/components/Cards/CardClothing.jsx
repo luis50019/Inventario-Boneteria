@@ -18,20 +18,19 @@ export const CardClothing = ({
   const handleNavigate=()=>{
     navigate(`/Inventary/${id}`)
   }
-
+  /*height={"150px"}
+  width={"180px"}*/
   return (
     <>
       <div onClick={handleNavigate}
         className="
-			 d-flex flex-col min-h-24 max-h-full min-w-64 max-w-64 p-5
-			 shadow-xl mb-10 mt-1 rounded-xl bg-white border-[.2px] border-[#ccc]
+			 d-flex flex-col min-h-10 max-h-[70rem] min-w-64 max-w-64 p-5
+			 shadow-xl mb-10 mt-1 rounded-xl bg-[#fff] border border-[#ddd]
 			"
       >
         <img
-          className="m-auto"
-          height={"150px"}
-          width={"180px"}
-          src={URL_IMG}
+          className="m-auto object-cover h-40"
+          src={images[0]||URL_IMG}
           alt="imagen de una prenda de ropa"
           title="imagen de una prenda de ropa"
         />

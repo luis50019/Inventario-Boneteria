@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IoIosAdd } from "react-icons/io";
 import { typesClothing } from "../../utils/dataFail";
 import { useNavigate} from "react-router";
 import { CardClothing } from "../Cards/CardClothing";
 
-export default function ProductManagement({ products }) {
+export default function ProductManagement({ products = [] }) {
   const navigate = useNavigate();
+  const [existingProducts,setExistingProducts] = useState(false);
+
+  useEffect(()=>{
+    if(products?.length>0){
+      setExistingProducts(true)
+    }else{
+      setExistingProducts(false)
+    }
+
+  },[products])
 
   const handleNavigate = () => {
     navigate("/Inventary/NewProduct");
@@ -27,22 +37,24 @@ export default function ProductManagement({ products }) {
             <IoIosAdd className="font-extrabold text-4xl" />
           </button>
         </div>
-
         <div className="flex flex-col items-center">
-          {products?.map((product) => (
-            <CardClothing
-              availableUnits={product.availableUnits}
-              id={product._id}
-              incomeGenerated={product.incomeGenerated}
-              productName={product.productName}
-              profitsTotal={product.profitsGenerated}
-              size={product.garment.size.size}
-              soldUnits={product.soldUnits}
-              images={product.images}
-              key={product._id}
-            />
-          ))}
+          {
+            existingProducts ? (products?.map((product) => (
+              <CardClothing
+                availableUnits={product.availableUnits}
+                id={product._id}
+                incomeGenerated={product.incomeGenerated}
+                productName={product.productName}
+                profitsTotal={product.profitsGenerated}
+                size={product.garment.size.size}
+                soldUnits={product.soldUnits}
+                images={product.images}
+                key={product._id}
+              />
+            ))):<p className="text-[#5e5d5d] mt-5 text-lg">No hay productos en el inventario</p>
+          }
         </div>
+        
       </div>
     </>
   );

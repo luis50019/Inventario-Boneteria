@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useEffect,useState } from "react";
 import Slider from "./Slider";
 import {CardClothing} from "../Cards/CardClothing";
 
-export default function TopProductSlider({ products }) {
+export default function TopProductSlider({ products=[] }) {
+  const [existingProducts, setExistingProducts] = useState(false);
+  useEffect(()=>{
+    if (products?.length>0) {
+      setExistingProducts(true);
+    } else {
+      setExistingProducts(false);
+    }
+
+  },[products ])
+
   return (
     <>
-      <Slider height={"auto"} title={"Productos más vendidos"}>
+      {existingProducts&&(
+        <Slider height={"auto"} title={"Productos más vendidos"}>
         {products?.map((product, index) => (
           <CardClothing
             availableUnits={product.availableUnits}
@@ -21,6 +32,7 @@ export default function TopProductSlider({ products }) {
           />
         ))}
       </Slider>
+      )}
     </>
   );
 }

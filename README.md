@@ -17,12 +17,11 @@
     3._ Crear un contexto para las ventas
       - registrar ventas
       - buscar un venta
+diseño a cambiar
+los siguientes inpus debemos cambiarlos por inputs pero dde tipo select
+ tipo de prenda
+ los inputs de rangos de edad
 
+-- agregar un boton de cancelar cuando se desea agregar una foto desde los documentos
 
-
-			<Input
-captureImg?(
-				<div className="w-full rounded-lg h-[40rem] bg-[#f7f6f6] flex flex-col gap-5 justify-center items-center">
-					<img className="w-[90%] h-[35rem]"	src={captureImg}/>
-					<button onClick={handleDeleteImg} className='h-10 pr-5 pl-5 rounded-md bg-[#ff0f0f] text-[#fff] font-bold'>Borrar foto</button>
-				</div>):(<ImageProduct setImg={setCaptureImg}/>)
+-- separar la logica de agregar y visualizar imagenes

@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react-swc'
 import viteBasicSslPlugin from '@vitejs/plugin-basic-ssl'
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(),viteBasicSslPlugin()],
   server:{
     host:'0.0.0.0',
     port:5173,
