@@ -1,6 +1,6 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useCallback, useContext, useState } from "react";
 import { getStadisticGeneral, InfoInventary } from "../api/statistics.js";
-import {getAllProducts, getTopProducts,getProductsAboutToEnd,getProductSpecific,addProduct} from '../api/products.js'
+import {getAllProducts, getTopProducts,getProductsAboutToEnd,getProductSpecific,addProduct,getProductsByName} from '../api/products.js'
 const AppContext = createContext(); 
 
 export const UseContextApp = ()=> useContext(AppContext);
@@ -23,6 +23,22 @@ export function AppProvider({children}){
       setLoading(false);
     }
   }
+
+  const findProductsByName = useCallback(async(name)=>{
+    try {
+      setLoading(true);
+      if(name){
+        const data = await getProductsByName(name);
+        return data.data;
+      }else{
+        console.log("no hay nada")
+      }
+    } catch (error) {
+      setError('Hubo un error al cargar los productos');
+    }finally{
+      setLoading(false);
+    }
+  })
 
   const getInfoInventary = async ()=>{
     try {
@@ -76,6 +92,7 @@ export function AppProvider({children}){
 
   }
 
+
   return(
     <AppContext.Provider value={{
       getStadistics,
@@ -83,6 +100,7 @@ export function AppProvider({children}){
       getProducts,
       getProduct,
       addProductToInventary,
+      findProductsByName,
       isLoading,
       error
     }}>

@@ -9,7 +9,7 @@ export const useProductContext = () => {
   return context;
 };
 
- const ProductProvider = ({ children }) => {
+const ProductProvider = ({ children }) => {
 
 	const getAllCategories =async ()=>{
 		try{

@@ -1,12 +1,26 @@
+import { useState,useEffect } from 'react';
 import { GoHome } from 'react-icons/go';
 import { LuShoppingCart } from 'react-icons/lu';
 import { MdOutlineInventory2 } from 'react-icons/md';
-
-import { Link } from 'react-router';
+import { Link, useLocation } from 'react-router';
 
 function NavBar() {
+  const [navIsVisible,setNavIsVisible] = useState(true);
+  const location = useLocation();
+
+  useEffect(() => {
+    if(location.pathname === "/Sale" || location.pathname === "/Inventary" || location.pathname === "/" || location.pathname === "/Home"){
+      setNavIsVisible(true);
+    }else{
+      setNavIsVisible(false);
+    }
+  },[location.pathname]);
+
   return (
-    <div
+    <>
+      {
+      navIsVisible &&(
+        <div
       className={`
       flex w-5/6 justify-around fixed bottom-3 
     `}
@@ -27,6 +41,9 @@ function NavBar() {
         </button>
       </Link>
     </div>
+      )
+    }
+    </>
   );
 }
 

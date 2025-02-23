@@ -10,4 +10,4 @@ export const getSizeByCategory =(idCategory)=> connection.get(`products/size/${i
 export const getGenders =()=>connection.get('products/genders');
 export const editByProduct = (id,product)=> connection.put(`products/${id}`,product);
 export const deleteByProduct = (id)=> connection.delete(`products/${id}`);
-
+export const getProductsByName =(name)=> connection.get(`products/search/${name}`); 

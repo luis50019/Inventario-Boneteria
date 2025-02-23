@@ -68,6 +68,7 @@ export default function ProductForm() {
       opcion: opcion,
     });
   };
+  // TODO: CORREGIR ERROR DE BORRAR IMAGEN EN LA OPCION DE CARGAR IMAGEN
   // codigo para vereficar el tipo de operacion que se ralizara
   return (
     <form

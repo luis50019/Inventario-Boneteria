@@ -9,10 +9,15 @@ export const headerInfo = {
         'namePage': 'Inventario',
         'caption': 'Aquí podrás gestionar, actualizar y revisar el estado de tus productos fácilmente'
     },
-    'Sale':{
+    '/Sale':{
         'title': 'Bienvenido a la pantalla de ventas',
-        'namePage': 'Venta',
+        'namePage': 'Ventas',
         'caption': 'Registra las ventas de tus productos y mantén un control eficiente de tu negocio'
+    },
+    '/Sale/:id':{
+        'title': 'Ticket de venta',
+        'namePage': 'Ticket',
+        'caption': ''
     },
     '/Inventary/NewProduct':{
         'title': 'Bienvenido al panel de creacion de productos',
