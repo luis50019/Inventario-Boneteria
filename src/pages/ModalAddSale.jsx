@@ -144,15 +144,16 @@ export default function ModalAddSale({addProductToList,closeModal,productToUpdat
 
   const handlerCancel =()=>{
     setProductSelect(null);
+    closeModal()
     setError("")
   }
 
   return (
     <>
-      <div className="z-20 absolute left-0 top-0 flex justify-center min-w-[100vw] min-h-[54rem] border-2 max-w-[100vw] bg-[#00000069]">
+      <div className="z-20 absolute left-0 top-0 flex justify-center min-w-[100vw] min-h-[100vh] border-2 max-w-[100vw] bg-[#00000069]">
         <div className="min-h-[40rem] relative top-[5rem] max-h-[42rem] overflow-y-auto min-w-[22rem] px-1 py-2 border-2 bg-[#fff] flex flex-col justify-start items-center rounded-xl ">
           <div className="w-full px-1 text-left" onClick={closeModal}>
-          <MdCancel className="text-4xl" />
+          <MdCancel onClick={handlerCancel} className="text-4xl" />
           </div>
           <span className="block text-left w-full pl-[1rem] text-3xl font-extrabold text-title">
             Datos del producto

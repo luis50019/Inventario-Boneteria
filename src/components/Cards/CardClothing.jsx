@@ -24,7 +24,7 @@ export const CardClothing = ({
     <>
       <div onClick={handleNavigate}
         className={`
-			 d-flex flex-col min-h-10 max-h-[70rem] min-w-64 max-w-64 p-5
+			 d-flex flex-col min-h-[32rem] max-h-[32rem] min-w-64 max-w-64 p-5
 			 shadow-xl mb-10 mt-1 rounded-xl ${soldOut?"bg-[#FFE08A] border border-[#FFE08A]":"bg-[#fff] border border-[#ddd]"}
 			`}
       >

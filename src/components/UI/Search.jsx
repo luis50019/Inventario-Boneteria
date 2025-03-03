@@ -44,7 +44,7 @@ export function Search({ placeholder, selectProduct = null }) {
         </button>
       </form>
       {productsFind && productsFind.length?(
-        <div className="absolute translate-y-36 flex flex-col min-h-[25rem] max-h-[25rem] overflow-y-auto min-w-[20rem] max-w-[20rem] z-30 rounded-2xl bg-[#fff] shadow-2xl px-4" >
+        <div className="absolute translate-y-36 flex flex-col min-h-[25rem] max-h-[25rem] overflow-y-auto w-[90%] z-30 rounded-2xl bg-[#fff] shadow-2xl px-4" >
           {productsFind.map((product) => (
             <div key={product._id} className="w-full flex justify-between items-center min-h-20 max-h-20" onClick={()=>handlerClick(product)}>
               <img width={"50px"} src={product.images[0]} />

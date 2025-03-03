@@ -9,7 +9,7 @@ function NavBar() {
   const location = useLocation();
 
   useEffect(() => {
-    if(location.pathname === "/Sale" || location.pathname === "/Inventary" || location.pathname === "/" || location.pathname === "/Home"){
+    if(location.pathname === "/sale" || location.pathname === "/Inventary" || location.pathname === "/" || location.pathname === "/Home"){
       setNavIsVisible(true);
     }else{
       setNavIsVisible(false);
@@ -30,7 +30,7 @@ function NavBar() {
           <GoHome className="text-3xl" />
         </button>
       </Link>
-      <Link to="/Sale">
+      <Link to="/sale">
         <button className="bg-[#fff] shadow-sm shadow-[#333] font-extrabold rounded-full w-16 h-16 p-4">
           <LuShoppingCart className="text-3xl" />
         </button>

@@ -25,11 +25,11 @@ export default function DashboardSales() {
             title={headerLocation.title}
             namePage={headerLocation.namePage}
           >
-            {location.pathname == "/Sale" ? (
+            {location.pathname == "/sale" ? (
               <LuShoppingCart className="text-4xl" />
-            ) : location.pathname == "/Sale/newSale" ? (<></>):(<FaArrowLeft className="text-4xl"
+            ) : location.pathname == "/sale/newSale" ? (<></>):(<FaArrowLeft className="text-4xl"
                             onClick={() => {
-                              navigate("/Sale");
+                              navigate("/sale");
                             }}
                           />)}
           </Header>

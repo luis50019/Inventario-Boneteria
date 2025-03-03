@@ -16,7 +16,7 @@ function App() {
     <div className="container cont mx-auto pl-5 pt-5 relative">
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/Sale" element={<DashboardSales />} >
+        <Route path="/sale" element={<DashboardSales />} >
           <Route index element={<SalePage />} />
           <Route path=":id" element={<InfoSale/>}/>
           <Route path="newSale" element={<NewSale/>}/>

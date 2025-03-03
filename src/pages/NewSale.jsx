@@ -74,7 +74,7 @@ export default function NewSale() {
 
   return (
     <>
-      <div className="min-h-[35rem] max-h-[35rem] flex flex-col pr-2 justify-between">
+      <div className="min-h-[80vh] max-h-[100vh] flex flex-col pr-2 justify-between">
         {
           modalVisible&&(<ModalAddSale closeModal={handlerCloseModal} addProductToList={addProduct} productToUpdate={productSelect} />)
         } 
@@ -94,7 +94,7 @@ export default function NewSale() {
           <FaArrowLeft className="text-3xl"
                 onClick={() => {
                   resetValues();
-                  navigate("/Sale");
+                  navigate("/sale");
                 }}
               />
           <h2 className="text-title text-2xl">Productos vendidos</h2>

@@ -10,22 +10,22 @@ export function CardsInfo({ valor, titleCard}) {
   return (
     <div
       className={`
-        rounded-xl h-52 min-w-40 max-w-40 text-center ${color ? "bg-title" : "bg-[#fff]"}
-        flex flex-col gap-2 p-2 cont-card pt-3 mb-3
+        rounded-xl min-h-56 max-h-56 min-w-44 max-w-44 text-center ${color ? "bg-title" : "bg-[#fff]"}
+        flex flex-col cont-card px-1 pt-3 mb-3
         `}
     >
       <p
         className={`${
           color ? "text-[#fff]" : "text-title"
-        } h-14  text-center w-full text-xl font-semibold`}
+        } h-14  text-center w-full min-h-20 text-xl font-semibold`}
       >
         {titleCard}
       </p>
-      <span
-        className={`${color ? "text-[#fff]" : "text-title"} mt-5 price text-wrap`}
+      <div
+        className={`${color ? "text-[#fff]" : "text-title"} h-64 mt-5 price text-wrap`}
       >
-        $ {valor}
-      </span>
+        ${valor}
+      </div>
     </div>
   );
 }
