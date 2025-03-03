@@ -31,7 +31,7 @@ export default function ModalAddSale({addProductToList,closeModal,productToUpdat
       setError("No hay suficientes prendas en existencia");
       return ;
     }
-
+    setError("")
     let valueTotal  
     if(activeDiscount){
       const discountedUnitPrice = parseFloat(product.unitPrice) * (1 - parseFloat(product.discount) / 100);
@@ -52,8 +52,6 @@ export default function ModalAddSale({addProductToList,closeModal,productToUpdat
     let valueTotal = calculateTotal(units,dozen,productSelect);  
     
     setTotal(parseFloat(valueTotal));
-    setError("")
-
   },[valueUnits,valueDozen])
 
   useEffect(()=>{
@@ -62,7 +60,6 @@ export default function ModalAddSale({addProductToList,closeModal,productToUpdat
     // validate if the product has a discount
     let valueTotal = calculateTotal(units,dozen,productSelect,discount);
     setTotal(parseFloat(valueTotal));
-    setError("")
   },[discount])
 
   const handlerOnSubmit = (data) => {
@@ -74,11 +71,12 @@ export default function ModalAddSale({addProductToList,closeModal,productToUpdat
       setError("No se puede vender 0 prendas");
       return
     }
-
+    setError("")
     if(parseInt(productSelect.availableUnits)<totalUnits){
       setError("No hay suficientes prendas en existencia");
       return;
     }
+    setError("")
     const newProduct ={
       pieceQuantity: units,
       productName: productSelect.productName,
@@ -90,9 +88,9 @@ export default function ModalAddSale({addProductToList,closeModal,productToUpdat
       subTotal:total,
       availableUnits:productSelect.availableUnits,
       unitPrice: productSelect.unitPrice,
-      dozenPrice:productSelect.dozenPrice
+      dozenPrice:productSelect.dozenPrice,
+      discountActive:discount
     }
-    setError("");
     addProductToList(newProduct,total,productToUpdate);
     setTotal(0);
     setProductSelect(null)
@@ -117,6 +115,7 @@ export default function ModalAddSale({addProductToList,closeModal,productToUpdat
         setError("Ocurrio un problema all obtener el producto");
       }
     }
+    
     if(productToUpdate !== null && productSelect ==null){
       setIsDisabled(false);
       setValue("productName",productToUpdate.productName);
@@ -125,6 +124,7 @@ export default function ModalAddSale({addProductToList,closeModal,productToUpdat
       setValue("dozen",productToUpdate.quantityDozens);
       setTotal(productToUpdate.subTotal);
       GetProductToUpdate(productToUpdate.productName);
+      setError("")
       return ;
     }
 
@@ -150,7 +150,7 @@ export default function ModalAddSale({addProductToList,closeModal,productToUpdat
   return (
     <>
       <div className="z-20 absolute left-0 top-0 flex justify-center min-w-[100vw] min-h-[54rem] border-2 max-w-[100vw] bg-[#00000069]">
-        <div className="min-h-[40rem] relative top-[5rem] max-h-[40.1rem] overflow-y-auto min-w-[22rem] px-1 py-2 border-2 bg-[#fff] flex flex-col justify-start items-center rounded-xl ">
+        <div className="min-h-[40rem] relative top-[5rem] max-h-[42rem] overflow-y-auto min-w-[22rem] px-1 py-2 border-2 bg-[#fff] flex flex-col justify-start items-center rounded-xl ">
           <div className="w-full px-1 text-left" onClick={closeModal}>
           <MdCancel className="text-4xl" />
           </div>

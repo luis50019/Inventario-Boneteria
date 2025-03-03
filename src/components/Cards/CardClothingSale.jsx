@@ -39,10 +39,12 @@ export default function CardClothingSale({
           <span className="text-sm font-extralight">Num.prendas</span>
           <span className="text-sm font-bold">{product.totalSoldAmount}</span>
         </div>
-        <div className="px-2 flex justify-between">
-          <span className="text-sm font-extralight">Descuento</span>
-          <span className="text-sm font-bold">{product.discount}%</span>
-        </div>
+        {
+          product.discountActive&&(<div className="px-2 flex justify-between">
+            <span className="text-sm font-extralight">Descuento</span>
+            <span className="text-sm font-bold">{product.discount}%</span>
+          </div>)
+        }
         {product.pieceQuantity >= 1 && (
           <div className="px-2 flex justify-between">
             <span className="text-sm font-extralight" >Precio unidad</span>
