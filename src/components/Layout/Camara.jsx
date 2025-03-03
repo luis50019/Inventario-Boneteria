@@ -7,6 +7,9 @@ export default function ImageProduct({ setImg }) {
     const imgSrc = webCamRef.current.getScreenshot();
     setImg(imgSrc);
   };
+  const handlerCancel =()=>{
+    setImg(undefined)
+  }
   return (
     <>
       <div className="w-[100%] h-[100%] flex flex-col gap-3 justify-center items-center">
@@ -29,6 +32,7 @@ export default function ImageProduct({ setImg }) {
         >
           Tomar foto
         </button>
+        <button onClick={handlerCancel} className="bg-[#f00] min-w-[90%] max-w-[90%] rounded-lg font-bold text-xl text-[#fff]">Cancelar</button>
       </div>
     </>
   );

@@ -37,9 +37,9 @@ export default function Inventary() {
           <TopProductSlider products={products.productsTop} />
         ):<p className="text-xl font-extralight h-[22rem]">Cargando los productos mas vendidos</p>
       }
-      {products.productsAboutToEnd && (
+      {products.productsAboutToEnd ?(
         <ProductsAboutToEndSlider products={products.productsAboutToEnd} />
-      )}
+      ):<p className="text-xl font-extralight h-[22rem]">Cargando los productos por agotarse</p>}
       {
         products.allProducts?(
           <ProductManagement products={products.allProducts} />

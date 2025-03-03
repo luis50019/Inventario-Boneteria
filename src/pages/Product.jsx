@@ -8,7 +8,6 @@ import useGetProduct from "../hooks/useGetProduct";
 export default function Product() {
   let { id } = useParams();
   const [idProduct, setIdProduct] = useState(id);
-  let location = useLocation();
   const {product,error,loading} = useGetProduct(idProduct)
 
   return (

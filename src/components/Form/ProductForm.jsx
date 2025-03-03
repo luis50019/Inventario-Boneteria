@@ -10,9 +10,10 @@ import Input from "../UI/Input";
 import InputSelect from "../UI/InputSelect";
 import ContImg from "../Layout/ContImg";
 import useCloudinary from "../../hooks/useCloudinary";
+import Spiner from "../UI/Spiner";
 // # componente unicamente para agregar productos
 export default function ProductForm() {
-  const { addProductToInventary } = UseContextApp();
+  const { addProductToInventary,isLoading } = UseContextApp();
   const navigate = useNavigate();
   const {
     register,
@@ -24,11 +25,13 @@ export default function ProductForm() {
   } = useForm();
   const optionCategorySelect = watch("category");
   const [isDisabled, setIsDisabled] = useState(false);
+  const [isActiveButton, setIsActiveButton] = useState(true);
   const [captureImg, setCaptureImg] = useState({img: [],imgLocal: [],opcion: ""});
   const { updateImage } = useCloudinary();
   const { categories } = useCategory();
   const { sizes, setCategorySelect } = useSizes();
   const { genders } = useGenders();
+  const [erroImgExist,setErroImgExist] = useState();
 
   useEffect(() => {
     setCategorySelect(optionCategorySelect)
@@ -37,15 +40,23 @@ export default function ProductForm() {
   // funcion para mandar los datos
   const onSubmit = async (data) => {
     const formData = new FormData();
-
     formData.append("file", captureImg.img);
     formData.append("upload_preset", "prubaImagenes");
     try {
+
+      if(captureImg.img.length == 0 ){
+        setErroImgExist("Debes de cargar una imagen");
+        return ;
+      }
+      setIsDisabled(true)
+      setIsActiveButton(false);
+      
       const imgCld = await updateImage(formData);
       data.availableUnits = parseInt(data.availableUnits);
-      data.dozenPrice = parseFloat(data.dozenPrice);
-      data.purchasePrice = parseFloat(data.purchasePrice);
-      data.unitPrice = parseFloat(data.unitPrice);
+      // the error this is when parse the variable to two decimal
+      data.dozenPrice = parseFloat(parseFloat(data.dozenPrice).toFixed(2));
+      data.purchasePrice = parseFloat(parseFloat(data.purchasePrice).toFixed(2));
+      data.unitPrice = parseFloat(parseFloat(data.unitPrice).toFixed(2));
       data.discount = parseFloat(data.discount);
       data.isSecondHand = data.isSecondHand == "yes";
       data.ImageUrl = [imgCld.secure_url];
@@ -53,11 +64,11 @@ export default function ProductForm() {
       console.log(data);
       const res = await addProductToInventary(data);
       if (res) {
-        console.log("final", res);
         navigate("/Inventary");
       }
     } catch (e) {
       console.log(e);
+      setErroImgExist("Error al registrar el producto");
     }
   };
   // codigo para tomar la foto
@@ -68,14 +79,17 @@ export default function ProductForm() {
       opcion: opcion,
     });
   };
-  // TODO: CORREGIR ERROR DE BORRAR IMAGEN EN LA OPCION DE CARGAR IMAGEN
-  // codigo para vereficar el tipo de operacion que se ralizara
+
   return (
-    <form
+    <>
+      {
+        isLoading&&(<Spiner/>)
+      }
+      <form
       onSubmit={handleSubmit(onSubmit)}
       className="mt-5 pl-2 flex flex-col gap-5 min-h-auto pb-32 items-start capitalize"
     >
-      <ContImg setCaptureImg={selectImg} img={captureImg} />
+      <ContImg setCaptureImg={selectImg} img={captureImg} isDisabled={isDisabled} />
 
       <Input
         label="Nombre del producto"
@@ -94,7 +108,7 @@ export default function ProductForm() {
                 "El nombre del producto debe de tener menos de 100 caracteres ",
             },
             pattern: {
-              value: /^[a-zA-Z0-9 ]+$/,
+              value: /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s]+$/,
               message:
                 "El nombre del producto solo puede contener letras y numeros ",
             },
@@ -259,13 +273,14 @@ export default function ProductForm() {
           )}
         </>
       )}
-
-      <button
-        type="submit"
-        className="bg-[#2B1B42] rounded-xl text-white font-extrabold text-2xl w-full text-[#fff] h-10"
-      >
+      <span className="text-sm text-[#f00] normal-case font-light min-h-6 max-h-6">
+        { erroImgExist && (erroImgExist)}
+      </span>
+      <button disabled={!isActiveButton} className={`${isActiveButton?"bg-[#2B1B42]":"bg-[#0b0613bb]"} rounded-xl text-white font-extrabold text-2xl w-full text-[#fff] h-10`} type="submit" >
         Agregar producto
       </button>
     </form>
+    
+    </>
   );
 }

@@ -10,6 +10,7 @@ const Input = forwardRef(
         <input
           type={type}
           name={nameInput}
+          step={"0.01"}
 					{...register}
           className={`${inputDisabled ? "inputDisable" : "inputActive"} pl-2 w-full capitalize`}
           placeholder={placeholder}

@@ -13,14 +13,16 @@ import { useProductContext } from "../../context/ProductContex";
 // # componente unicamente para agregar productos
 export default function ProductFormEdit({ productSelect }) {
   const { editProduct, deleteProduct } = useProductContext();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isActiveButton,setIsActiveButton] = useState(false);
+  const [srcOptional,setSrcOptional] = useState(null);
   const [errorProduct, setErrorProduct] = useState("");
   const [producto, setProduct] = useState(productSelect);
   const [isDisabled, setIsDisabled] = useState(true);
+  const [errorImgExist, setErroImgExist] = useState();
   const [captureImg, setCaptureImg] = useState({
     img: [],
     imgLocal: [],
-    opcion: "",
+    opcion: "noExist",
   });
   const {
     register,
@@ -32,13 +34,12 @@ export default function ProductFormEdit({ productSelect }) {
   const navigate = useNavigate();
   const { updateImage } = useCloudinary();
   const optionCategorySelect = watch("category");
-
   const { categories } = useCategory();
   const { sizes, setCategorySelect } = useSizes();
   const { genders } = useGenders();
+  const selectImg = (img, imgLocal, opcion) => setCaptureImg({ img: img, imgLocal: imgLocal, opcion: opcion });
+
   // codigo para tomar la foto
-  const selectImg = (img, imgLocal, opcion) =>
-    setCaptureImg({ img: img, imgLocal: imgLocal, opcion: opcion });
 
   useEffect(() => {
     setCategorySelect(optionCategorySelect);
@@ -46,17 +47,17 @@ export default function ProductFormEdit({ productSelect }) {
 
   useEffect(() => {
     if (producto && isDisabled) {
-      console.log("product: ", producto);
       setValue("productName", producto[0].productName);
       setValue("category", producto[0].category._id);
       setValue("size", producto[0].garment.size._id);
       setValue("purchasePrice", producto[0].purchasePrice || 0);
       setValue("unitPrice", producto[0].unitPrice || 0);
       setValue("dozenPrice", producto[0].dozenPrice || 0);
-      setValue("availableUnits", producto[0].availableUnits || 1);
+      setValue("availableUnits", producto[0].availableUnits || 0);
       setValue("discount", producto[0].discount || 0);
       setValue("targetGender", producto[0].garment.intendedGender._id);
       selectImg(producto[0].images[0], producto[0].images[0], "img");
+      setSrcOptional({img:producto[0].images[0],imgLocal:producto[0].images[0],opcion:"img"})
     }
     if (sizes.length == 0) {
       setCategorySelect(producto[0].category._id);
@@ -68,46 +69,55 @@ export default function ProductFormEdit({ productSelect }) {
 			const res = await deleteProduct(id);
     	navigate("/Inventary");
 		}catch(error){
-			console.log("errores: "+error);
+			setErrorProduct("Erro al eliminar el producto, vuelva a intentarlo en un rato")
 		}
   };
 
   //handler cancel
   const handlerCancel=()=>{
-    setIsDisabled(true)
+    setIsDisabled(true);
     setErrorProduct(null);
+    setCaptureImg({...srcOptional})
+    setValue("availableUnits", producto[0].availableUnits);
   }
   // funcion para mandar los datos
   const onSubmit = async (data) => {
     if (isDisabled) {
       setIsDisabled(false);
+      setValue("availableUnits", 0);
       return;
     }
 
     const formData = new FormData();
-
     formData.append("file", captureImg.img);
     formData.append("upload_preset", "prubaImagenes");
+
     try {
+      setIsDisabled(true)
+      setIsActiveButton(true)
+      if(!captureImg.img){
+        setErroImgExist("Debe de seleccionar una imagen");
+        return;
+      }
+
       const imgCld = await updateImage(formData);
-      data.availableUnits = parseInt(data.availableUnits);
+      data.availableUnits = parseInt(data.availableUnits) + producto[0].availableUnits;
       data.dozenPrice = parseFloat(data.dozenPrice);
       data.purchasePrice = parseFloat(data.purchasePrice);
       data.unitPrice = parseFloat(data.unitPrice);
       data.discount = parseFloat(data.discount);
       data.isSecondHand = data.isSecondHand == "yes";
       data.ImageUrl = [imgCld.secure_url];
+
       const res = await editProduct(producto[0]._id, data);
       if (res.status === 200) {
-        console.log("final", res);
         navigate("/Inventary");
       }
       if (res.status == 406) {
-        console.log("Ocurrio un problema");
         setErrorProduct(res.response.data);
       }
     } catch (e) {
-      console.log(e);
+      console.error("Advertencia algo sucedio");
     }
   };
 
@@ -297,11 +307,14 @@ export default function ProductFormEdit({ productSelect }) {
           />
         </>
       )}
-
+      <span className="text-sm text-[#f00] normal-case font-light min-h-6 max-h-6">
+        { errorImgExist? errorImgExist:""}
+      </span>
       {errorProduct && <span className="text-[#f00]">{errorProduct}</span>}
       <button
         type="submit"
-        className="bg-[#2B1B42] rounded-xl text-white font-extrabold text-2xl w-full text-[#fff] h-10"
+        disabled={isActiveButton}
+        className={`${!isActiveButton?"bg-[#2B1B42]":"bg-[#0b0613bb]"} rounded-xl text-white font-extrabold text-2xl w-full text-[#fff] h-10`}
       >
         {isDisabled ? "Editar producto" : "Confirmar cambios"}
       </button>

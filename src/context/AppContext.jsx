@@ -7,7 +7,7 @@ export const UseContextApp = ()=> useContext(AppContext);
 
 export function AppProvider({children}){
 
-  const [isLoading,setLoading] = useState(true);
+  const [isLoading,setLoading] = useState(false);
   const [error,setError] = useState(null);
 
   const getStadistics = async ()=>{
@@ -75,19 +75,25 @@ export function AppProvider({children}){
 
   const getProduct=async (id)=>{
     try {
+      setLoading(true)
       const product = await getProductSpecific(id); 
       return product.data;
     } catch (error) {
       setError('Hubo un error al cargar el producto');
+    }finally{
+      setLoading(false)
     }
   }
 
   const addProductToInventary =async(dataProduct)=>{
     try {
+      setLoading(true);
       const data = await addProduct(dataProduct);
       return data;
     } catch (error) {
       setError('Hubo un error al añadir el producto al inventario');
+    }finally{
+      setLoading(false)
     }
 
   }

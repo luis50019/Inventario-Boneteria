@@ -1,5 +1,5 @@
 import { createContext,useContext,useState } from "react";
-import { getSales,getSaleById } from "../api/sales";
+import { getSales,getSaleById,newSale } from "../api/sales";
 
 const contextSales = createContext();
 
@@ -14,14 +14,14 @@ const SaleProvider =({children}) => {
   
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
+  const [loading,setLoading] = useState(false);
   const [error, setError] = useState({});
   const addProduct = (newProduct, subTotal,updateProduct = null) => {
 
     //validar que el producto no exista
-    const productIndex = products.findIndex((product) => product.id === newProduct.productId);
+    const productIndex = products.findIndex((product) => product.productId === newProduct.productId);
     console.log("nuevo valor",newProduct)
     if(productIndex !== -1 && updateProduct == null){
-      console.log(products)
       setError({product:newProduct.productName,message:"Este producto ya esta en el ticket"});
       return ;
     }
@@ -40,9 +40,22 @@ const SaleProvider =({children}) => {
     setProducts(newProducts);
   };
 
+  const registerNewSale =async (data)=>{
+    try{
+      setLoading(true);
+      const res = await newSale(data);
+      return res;
+    }catch(error){
+      setError(error);
+      return error;
+    }finally{
+      setLoading(false);
+    }
+  }
+
   const deleteProduct =(id,subTotal)=>{
     const productsToFilter = [...products];
-    const newProducts =productsToFilter.filter((product)=>product.productId!=id);
+    const newProducts = productsToFilter.filter((product)=>product.productId!=id);
     const newTotal = total - subTotal;
     setTotal(newTotal);
     setProducts(newProducts) 
@@ -65,7 +78,6 @@ const SaleProvider =({children}) => {
   const getSalesById = async (id) => {
     try {
       const res = await getSaleById(id);
-      console.log(res.data);
       return res.data;
     } catch (error) {
       return error;
@@ -78,6 +90,7 @@ const SaleProvider =({children}) => {
       getSalesById,
       deleteProduct,
       setError,
+      registerNewSale,
       addProduct,
       resetValues,
       products,

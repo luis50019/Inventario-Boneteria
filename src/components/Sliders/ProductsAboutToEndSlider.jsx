@@ -4,7 +4,7 @@ import { CardClothing } from "../Cards/CardClothing";
 export default function ProductsAboutToEndSlider({ products }) {
   return (
     <>
-      <Slider height={"80"} title={"Productos por agotarse"}>
+      <Slider height={"auto"} title={"Productos por agotarse"}>
         {products?.map((product, index) => (
           <CardClothing
             availableUnits={product.availableUnits}
@@ -17,6 +17,7 @@ export default function ProductsAboutToEndSlider({ products }) {
             soldUnits={product.soldUnits}
             images={product.images}
             key={product._id}
+            soldOut={true}
           />
         ))}
       </Slider>

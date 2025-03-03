@@ -12,21 +12,21 @@ export const CardClothing = ({
   size,
   id,
   numberPosition,
+  soldOut = false,
 }) => {
   const navigate = useNavigate();
 
   const handleNavigate=()=>{
     navigate(`/Inventary/${id}`)
   }
-  /*height={"150px"}
-  width={"180px"}*/
+  
   return (
     <>
       <div onClick={handleNavigate}
-        className="
+        className={`
 			 d-flex flex-col min-h-10 max-h-[70rem] min-w-64 max-w-64 p-5
-			 shadow-xl mb-10 mt-1 rounded-xl bg-[#fff] border border-[#ddd]
-			"
+			 shadow-xl mb-10 mt-1 rounded-xl ${soldOut?"bg-[#FFE08A] border border-[#FFE08A]":"bg-[#fff] border border-[#ddd]"}
+			`}
       >
         <img
           className="m-auto object-cover h-40"
@@ -35,7 +35,7 @@ export const CardClothing = ({
           title="imagen de una prenda de ropa"
         />
         <div className="mt-4">
-          {numberPosition ? (
+          {(numberPosition && !soldOut) ? (
             <span className="font-bold text-xl">#{numberPosition}</span>
           ) : (
             ""
@@ -46,13 +46,13 @@ export const CardClothing = ({
           <span className="text-sm font-extralight">{size}</span>
           <div>
             <div className="flex justify-between flex-col">
-              <span className="text-[#2B1B42] font-extrabold">
+              <span className={`${soldOut?"text-[#555555]":"text-[#2B1B42]"} font-extrabold`}>
                 unidades vendidas
               </span>
-              <span className="text-[#F65D46] font-extrabold">{soldUnits}</span>
+              <span className={` text-[#F65D46]   font-extrabold`}>{soldUnits}</span>
             </div>
             <div className="flex justify-between flex-col">
-              <span className="ext-[#2B1B42] font-extrabold">
+              <span className={`${soldOut?"text-[#555555]":"text-[#2B1B42]"} font-extrabold`}>
                 Ingresos Generados
               </span>
               <span className="text-[#F65D46] font-extrabold">
@@ -60,7 +60,7 @@ export const CardClothing = ({
               </span>
             </div>
             <div className="flex justify-between flex-col">
-              <span className="ext-[#2B1B42] font-extrabold">
+              <span className={`${soldOut?"text-[#555555]":"text-[#2B1B42]"} font-extrabold`}>
                 Ganancias Generadas
               </span>
               <span className="text-[#F65D46] font-extrabold">
@@ -68,7 +68,7 @@ export const CardClothing = ({
               </span>
             </div>
             <div className="flex justify-between flex-col">
-              <span className="ext-[#2B1B42] font-extrabold">
+              <span className={`${soldOut?"text-[#555555]":"text-[#2B1B42]"} font-extrabold`}>
                 Unidades Disponibles
               </span>
               <span className="text-[#F65D46] font-extrabold">

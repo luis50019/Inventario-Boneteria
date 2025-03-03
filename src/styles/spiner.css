@@ -1,0 +1,55 @@
+@keyframes loading {
+  0%, 100% {
+    margin-top: 25px;
+    height: 10px;
+  }
+
+  50%{
+    margin-top: 0px;
+    height: 50px;
+  }
+}
+
+ul {
+  position: absolute;
+  width: 100%;
+  min-height: 278dvh;
+  z-index: 1000;
+  background-color: #00000033;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  gap: 5px;
+  top: 0px;
+  left: 0px;
+}
+
+li {
+  background-color: #2f1957;
+  width: 10px;
+  height: 10px;
+  animation: loading 1s ease-in-out infinite;
+}
+
+li:nth-child(1) {
+  animation-delay: 0s;
+}
+
+li:nth-child(2) {
+  animation-delay: -0.2s;
+}
+
+li:nth-child(3) {
+  animation-delay: -0.4s;
+}
+
+li:nth-child(4) {
+  animation-delay: -0.6s;
+}
+
+li:nth-child(5) {
+  animation-delay: -0.8s;
+}

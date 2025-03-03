@@ -27,21 +27,17 @@ export default function InfoSale() {
 
   return (
     <>
-     <div className="flex flex-col gap-5 min-h-[80vh]">
-        <h2>Ticket: #1</h2>
+     <div className="flex pr-3 flex-col gap-5 min-h-[80vh]">
+        <h2>Ticket: #{sale?.ticketNumber}</h2>
         <h2 className="text-2xl font-bold">Producto vendidos</h2>
-        {sale&&(sale.details.map((product)=>(
-          <CardClothingSale 
-          key={product.productName}
-          discount={product.discount}
-          nameClothing={product.product.productName}
-          numberClothings={product.totalSoldAmount}
-          priceDozen={product.dozenPrice}
-          priceUnit={product.unitPrice}
-          size={product.size.size || ""}
-          total={product.subTotal}
-          />
-        )))}
+        <div className="grid w-full place-self-center grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5">
+          {sale&&(sale.details.map((product,index)=>(
+            <CardClothingSale
+            key={index}
+            product={product}
+            />
+          )))}
+        </div>
 
       </div>
     </>

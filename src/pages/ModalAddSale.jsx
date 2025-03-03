@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { Search } from "../components/UI/Search";
 import Input from "../components/UI/Input";
 import { MdCancel } from "react-icons/md";
 import { useFindProduct } from "../hooks/useFindProduct";
-export default function AddSale({addProductToList,closeModal,productToUpdate = null }) {
+export default function ModalAddSale({addProductToList,closeModal,productToUpdate = null }) {
   const {getProductsByName,productsFind} = useFindProduct();
   const [productSelect, setProductSelect] = useState(null);
   const [error, setError] = useState("");
@@ -20,27 +20,50 @@ export default function AddSale({addProductToList,closeModal,productToUpdate = n
 
   const valueUnits = watch("units");
   const valueDozen = watch("dozen");
+  const discount = watch("discount");
 
-  useEffect(()=>{
-    const units = parseInt(valueUnits) || 0 ;
-    const dozen = parseInt(valueDozen) || 0;
+  const calculateTotal = (units,dozen,product,activeDiscount = false)=>{
+
+    if(!product) return;
     const totalUnits = units+(dozen*12);
 
-    if(!productSelect) return;
-    console.log("pas")
-
-    if(totalUnits > parseInt(productSelect)){
+    if(totalUnits > parseInt(product?.availableUnits)){
       setError("No hay suficientes prendas en existencia");
       return ;
     }
 
-    const discountedUnitPrice = parseFloat(productSelect.unitPrice) * (1 - parseFloat(productSelect.discount) / 100);
-    const discountedDozenPrice = parseFloat(productSelect.dozenPrice) * (1 - parseFloat(productSelect.discount) / 100);
-    const valueTotal = parseFloat((discountedDozenPrice*dozen) + (discountedUnitPrice*units));
-    setTotal(valueTotal);
+    let valueTotal  
+    if(activeDiscount){
+      const discountedUnitPrice = parseFloat(product.unitPrice) * (1 - parseFloat(product.discount) / 100);
+      const discountedDozenPrice = parseFloat(product.dozenPrice) * (1 - parseFloat(product.discount) / 100);
+      valueTotal = parseFloat((discountedDozenPrice*dozen) + (discountedUnitPrice*units));
+    }else{
+      valueTotal = parseFloat(product?.unitPrice*units) + parseFloat(product?.dozenPrice*dozen);
+    }
+    return valueTotal.toFixed(2);
+  }
+
+  useEffect(()=>{
+    if(!productSelect) return;
+    const units = parseInt(valueUnits) || 0 ;
+    const dozen = parseInt(valueDozen) || 0;
+    
+    // validate if the product has a discount
+    let valueTotal = calculateTotal(units,dozen,productSelect);  
+    
+    setTotal(parseFloat(valueTotal));
     setError("")
 
   },[valueUnits,valueDozen])
+
+  useEffect(()=>{
+    const units = parseInt(valueUnits) || 0 ;
+    const dozen = parseInt(valueDozen) || 0;
+    // validate if the product has a discount
+    let valueTotal = calculateTotal(units,dozen,productSelect,discount);
+    setTotal(parseFloat(valueTotal));
+    setError("")
+  },[discount])
 
   const handlerOnSubmit = (data) => {
     const units = parseInt(data.units);
@@ -65,7 +88,9 @@ export default function AddSale({addProductToList,closeModal,productToUpdate = n
       quantityDozens: dozen,
       productId: productSelect._id,
       subTotal:total,
-      availableUnits:productSelect.availableUnits
+      availableUnits:productSelect.availableUnits,
+      unitPrice: productSelect.unitPrice,
+      dozenPrice:productSelect.dozenPrice
     }
     setError("");
     addProductToList(newProduct,total,productToUpdate);
@@ -77,8 +102,10 @@ export default function AddSale({addProductToList,closeModal,productToUpdate = n
   };
 
   useEffect(()=>{
+    setValue("productName","Debes seleccionar un producto");
     setValue("units",0);
     setValue("dozen",0)
+    setTotal(0);
   },[])
 
   useEffect(() => {
@@ -87,8 +114,7 @@ export default function AddSale({addProductToList,closeModal,productToUpdate = n
         await getProductsByName(name);
         setProductSelect(productsFind[0]);
       }catch(error){
-        console.log(error);
-
+        setError("Ocurrio un problema all obtener el producto");
       }
     }
     if(productToUpdate !== null && productSelect ==null){
@@ -99,7 +125,6 @@ export default function AddSale({addProductToList,closeModal,productToUpdate = n
       setValue("dozen",productToUpdate.quantityDozens);
       setTotal(productToUpdate.subTotal);
       GetProductToUpdate(productToUpdate.productName);
-      console.log("hola soy yo")
       return ;
     }
 
@@ -122,16 +147,10 @@ export default function AddSale({addProductToList,closeModal,productToUpdate = n
     setError("")
   }
 
-  /*
-
-    TODO: validar los dos input
-    TODO: al salir del modal borrar el valor del estado
-
-  */
   return (
     <>
-      <div className="z-20 absolute left-0 top-0 flex items-center justify-center min-w-[100vw] min-h-[54rem] border-2 max-w-[100vw] bg-[#00000069]">
-        <div className="min-h-[38rem] relative max-h-[40rem] overflow-y-auto min-w-[22rem] px-1 py-2 border-2 bg-[#fff] flex flex-col justify-start items-center rounded-xl ">
+      <div className="z-20 absolute left-0 top-0 flex justify-center min-w-[100vw] min-h-[54rem] border-2 max-w-[100vw] bg-[#00000069]">
+        <div className="min-h-[40rem] relative top-[5rem] max-h-[40.1rem] overflow-y-auto min-w-[22rem] px-1 py-2 border-2 bg-[#fff] flex flex-col justify-start items-center rounded-xl ">
           <div className="w-full px-1 text-left" onClick={closeModal}>
           <MdCancel className="text-4xl" />
           </div>
