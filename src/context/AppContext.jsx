@@ -8,6 +8,7 @@ export const UseContextApp = ()=> useContext(AppContext);
 export function AppProvider({children}){
 
   const [isLoading,setLoading] = useState(false);
+  const [isNewProduct,setIsNewProduct] = useState(false);
   const [error,setError] = useState(null);
 
   const getStadistics = async ()=>{
@@ -94,6 +95,7 @@ export function AppProvider({children}){
       setError('Hubo un error al añadir el producto al inventario');
     }finally{
       setLoading(false)
+      setIsNewProduct(true)
     }
 
   }
@@ -106,6 +108,8 @@ export function AppProvider({children}){
       getProducts,
       getProduct,
       addProductToInventary,
+      setIsNewProduct,
+      isNewProduct,
       findProductsByName,
       isLoading,
       error
