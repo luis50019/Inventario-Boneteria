@@ -3,7 +3,6 @@ import { GoHome } from 'react-icons/go';
 import { LuShoppingCart } from 'react-icons/lu';
 import { MdOutlineInventory2 } from 'react-icons/md';
 import { Link, useLocation } from 'react-router';
-import GeneratePDF from './GeneratePDF';
 import { UseContextApp } from '../../context/AppContext';
 
 function NavBar() {
@@ -43,7 +42,6 @@ function NavBar() {
           <MdOutlineInventory2 className=" text-3xl" />
         </button>
       </Link>
-      <GeneratePDF />
     </div>
       )
     }

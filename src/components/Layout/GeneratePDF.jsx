@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { FaPrint } from "react-icons/fa6";
+import SpinerCircle from '../UI/SpinerCircle.jsx';
 import { UseContextApp } from '../../context/AppContext.jsx';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import PDF from '../UI/PDF.jsx';
@@ -42,11 +44,11 @@ export default function GeneratePDF() {
       {!isLoading ? (
         <PDFDownloadLink document={<PDF products={products} />} fileName="Reporte_de_inventario.pdf">
           {({ loading }) => 
-            loading ? <span>Cargando...</span> : <span className="border-2 p-2">Descargar PDF</span>
+            loading ? <SpinerCircle/>: <FaPrint className='text-3xl'/>
           }
         </PDFDownloadLink>
       ) : (
-        <span className="border-2 p-2">Generando PDF...</span>
+        <SpinerCircle/>
       )}
     </>
   );

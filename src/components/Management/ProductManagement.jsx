@@ -3,6 +3,7 @@ import { IoIosAdd } from "react-icons/io";
 import { typesClothing } from "../../utils/dataFail";
 import { useNavigate} from "react-router";
 import { CardClothing } from "../Cards/CardClothing";
+import GeneratePDF from "../Layout/GeneratePDF";
 
 export default function ProductManagement({ products = [] }) {
   const navigate = useNavigate();
@@ -33,6 +34,7 @@ export default function ProductManagement({ products = [] }) {
               </option>
             ))}
           </select>
+          <GeneratePDF/>
           <button onClick={handleNavigate} className="bg-[#fff]">
             <IoIosAdd className="font-extrabold text-4xl" />
           </button>
