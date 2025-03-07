@@ -29,8 +29,9 @@ export default function GeneratePDF() {
   }
 
   useEffect(() => {
-  
-    fetchInventoryData();
+    if(products.length===0){
+      fetchInventoryData();
+    }
   }, []);
   useEffect(()=>{
     fetchInventoryData();

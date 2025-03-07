@@ -7,11 +7,9 @@ export const useFindProduct =()=>{
   const getProductsByName = useCallback(async(name)=>{
     try{
       const products = await findProductsByName(name);
-      console.log(products)
       setProductsFind(products);
     }catch(error){
-      console.log(error);
-
+      return error;
     }
   },[])
   

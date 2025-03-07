@@ -20,7 +20,6 @@ const SaleProvider =({children}) => {
 
     //validar que el producto no exista
     const productIndex = products.findIndex((product) => product.productId === newProduct.productId);
-    console.log("nuevo valor",newProduct)
     if(productIndex !== -1 && updateProduct == null){
       setError({product:newProduct.productName,message:"Este producto ya esta en el ticket"});
       return ;

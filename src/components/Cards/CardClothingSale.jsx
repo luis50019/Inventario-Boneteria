@@ -16,10 +16,6 @@ export default function CardClothingSale({
     functionToDeleteProduct(product.productId,product.subTotal)
   }
 
-  useEffect(() => {
-    console.log(product);
-  },[])
-
   return (
     <div onClick={handlerClick} className="flex flex-col justify-center w-full min-h-[12rem] max-h-[12rem] shadow-lg rounded-lg border-[#cecece] border-2 px-2 py-2">
       <div className="flex flex-col justify-between min-w-[100%] max-w-[100%]">

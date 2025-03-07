@@ -8,10 +8,9 @@ const useGenders = () => {
     async function getDataGenders(){
       try {
         const res = await getAllGender();
-        console.log(res.data);
         setGenders(res);
       } catch (error) { 
-        console.log(error);
+        return error;
       }
     }
     getDataGenders()

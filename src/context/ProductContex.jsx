@@ -50,7 +50,6 @@ const ProductProvider = ({ children }) => {
 	}
 
 	const editProduct = async(idProduct,product)=>{
-		console.log(product)
 		try{
 			setIsLoading(true)
 			const res = await editByProduct(idProduct,product);

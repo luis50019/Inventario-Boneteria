@@ -61,13 +61,11 @@ export default function ProductForm() {
       data.isSecondHand = data.isSecondHand == "yes";
       data.ImageUrl = [imgCld.secure_url];
 
-      console.log(data);
       const res = await addProductToInventary(data);
       if (res) {
         navigate("/Inventary");
       }
     } catch (e) {
-      console.log(e);
       setErroImgExist("Error al registrar el producto");
     }
   };

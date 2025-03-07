@@ -10,7 +10,6 @@ export const useSizes = () => {
 		async function getSizes(categorySelect){
 			try {
 				if (categorySelect) {
-					console.log("Category", categorySelect);
 					const res = await getByCategory(categorySelect);
 					setSizes(res);
 				}else{
@@ -18,7 +17,7 @@ export const useSizes = () => {
 	
 				}
 			} catch (error) {
-				console.log("Error", error);
+				return error;
 			}
 		}
 		getSizes(categorySelect);

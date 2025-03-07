@@ -4,6 +4,7 @@ import CardSale from "../components/Cards/CardSale.jsx";
 import {Search} from "../components/UI/Search.jsx";
 import {IoIosAdd} from "react-icons/io";
 import { useNavigate } from "react-router";
+import { useFindTickets } from "../hooks/useFindTickets.js";
 
 export default function Sale() {
 
@@ -11,11 +12,12 @@ export default function Sale() {
   const [sales,setSales] = useState([]);
   const [errorSales,setErrorSales] = useState();
   const navigate = useNavigate();
+  const {findTicketsData,ticketsFinds,setTicketsFinds} = useFindTickets();
+
   useEffect(()=>{
     async function getSales(){
       try {
         const res = await getAllSales();
-        console.log(res)
         setSales(res);
       } catch (error) {
         setErrorSales(error);
@@ -24,13 +26,22 @@ export default function Sale() {
     getSales();
   },[])
 
+  const handlerSelectTicket = (idTicket)=>{
+    setTicketsFinds([]);
+    navigate(`/sale/${idTicket}`);
+  }
+
   const handlerNavigate =()=>{
     navigate('/sale/newSale');
   }
-
+  /* 
+    TODO: programar la barra de busqueda modificar este componente para que 
+    reciba un componente y a este le pasemos los valores encontradas y el se encarge en mostrarlos
+  
+  */
   return (
     <>
-      <Search placeholder='numero de ticket o fecha' />
+      <Search getData={findTicketsData} data={ticketsFinds} selectProduct={handlerSelectTicket} key={"tickets"} placeholder='numero de ticket o fecha' />
       <div className="flex justify-between">
         <h1 className="text-2xl font-bold text-left mt-2">Ventas</h1>
         <button onClick={handlerNavigate} className="bg-[#fff]">

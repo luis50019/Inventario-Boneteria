@@ -49,8 +49,6 @@ export default function NewSale() {
         data.products.push(newProduct)
       })
 
-      console.log(data)
-
       if(data){
         const res = await registerNewSale(data);
         if(res){
@@ -63,7 +61,7 @@ export default function NewSale() {
       }
        
     }catch(error){
-      console.log(error)
+      setError({product:"Error al enviar la data",message:error.message})
     }
   }
 
@@ -122,7 +120,7 @@ export default function NewSale() {
           <button onClick={handlerNavigate} className="bg-[#2B1B42] py-2 rounded-lg text-[#fff] font-bold">
             Añadir productos
           </button>
-          <button className={`${saleValidate?"bg-[#F78C94] ":"bg-[#720a11]"} py-2 rounded-lg text-[#fff] font-bold`} disabled={!saleValidate}>
+          <button className={`${saleValidate?"bg-[#F78C94] ":"bg-[#000000]"} py-2 rounded-lg text-[#fff] font-bold`} disabled={!saleValidate}>
             Confirmar Venta
           </button>
           

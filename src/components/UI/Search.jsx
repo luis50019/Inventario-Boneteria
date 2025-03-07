@@ -2,21 +2,25 @@ import React, { useCallback, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import "../../styles/Search.css";
 import debounce from "just-debounce-it";
-import { useFindProduct } from "../../hooks/useFindProduct.js";
-export function Search({ placeholder, selectProduct = null }) {
-  const { getProductsByName, productsFind, setProductsFind} = useFindProduct();
-
+import { useLocation } from "react-router";
+export function Search({
+  placeholder,
+  getData,
+  data = null,
+  selectProduct = null,
+}) {
+  const location = useLocation();
   const debounceFind = useCallback(
     debounce((nameProduct) => {
-      getProductsByName(nameProduct);
+      getData(nameProduct);
     }, 300),
-    [getProductsByName]
+    [getData]
   );
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newName = e.target.value;
-    debounceFind(newName);
+    const newName = e.target[0].value;
+    getData(newName);
   };
 
   const handleChange = (e) => {
@@ -24,15 +28,17 @@ export function Search({ placeholder, selectProduct = null }) {
     debounceFind(newName);
   };
 
-  const handlerClick =(product)=>{
+  const handlerClick = (product) => {
     selectProduct(product);
-    setProductsFind([]);
+  };
 
-  }
-
+  //TODO: componetizar
   return (
     <>
-      <form onSubmit={handleSubmit} className="mt-5 cont-search w-full">
+      <form
+        onSubmit={handleSubmit}
+        className="absolute mt-5 cont-search w-full"
+      >
         <input
           type="text"
           onChange={handleChange}
@@ -43,20 +49,48 @@ export function Search({ placeholder, selectProduct = null }) {
           <FaSearch />
         </button>
       </form>
-      {productsFind && productsFind.length?(
-        <div className="absolute translate-y-36 flex flex-col min-h-[25rem] max-h-[25rem] overflow-y-auto w-[90%] z-30 rounded-2xl bg-[#fff] shadow-2xl px-4" >
-          {productsFind.map((product) => (
-            <div key={product._id} className="w-full flex justify-between items-center min-h-20 max-h-20" onClick={()=>handlerClick(product)}>
-              <img width={"50px"} src={product.images[0]} />
-              <div className="flex flex-col items-end">
-                <span className="font-extralight">{product.productName}</span>
-                <span>{product.size[0]}</span>
+      {data && data.length ? (
+        <div
+          className={`absolute ${
+            location.pathname == "/sale/newSale" ? "translate-y-[9rem]" : ""
+          } flex flex-col min-h-[25rem] max-h-[25rem] overflow-y-auto w-[95%] z-30 rounded-2xl bg-[#fff] shadow-2xl px-4`}
+        >
+          {data?.images
+            ? data.map((product) => (
+                <div
+                  key={product._id}
+                  className="w-full flex justify-between items-center min-h-20 max-h-20"
+                  onClick={() => handlerClick(product)}
+                >
+                  <img width={"50px"} src={product.images[0]} />
+                  <div className="flex flex-col items-end">
+                    <span className="font-extralight">
+                      {product.productName}
+                    </span>
+                    <span>{product.size[0]}</span>
+                  </div>
+                </div>
+              ))
+            : data.map((ticket) => (
+              <div
+                key={ticket._id}
+                className="w-full flex justify-between items-center min-h-15 max-h-15 px-2 py-2"
+                onClick={() => handlerClick(ticket._id)}
+              >
+                <span className="text-xl font-bold">{new Date(ticket.saleDate).toLocaleDateString("es-MX")}</span>
+                <div className="flex flex-col items-end">
+                  <span className="font-normal">
+                    ${ticket.total}
+                  </span>
+                  <span>#{ticket.ticketNumber}</span>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          }
         </div>
-      ):""
-    }
+      ) : (
+        ""
+      )}
     </>
   );
 }

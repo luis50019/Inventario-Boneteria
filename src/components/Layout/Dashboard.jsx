@@ -20,7 +20,7 @@ export default function Dashboard() {
   return (
     <>
       <ProductProvider>
-        <div className="pb-12 h-[100vh] max-w-[95%]">
+        <div className="pb-12 relative h-[100vh] max-w-[95%]">
           <Header
             title={locationRoute?.title}
             caption={locationRoute?.caption}

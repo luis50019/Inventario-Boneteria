@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useState } from "react";
 import { getStadisticGeneral, InfoInventary } from "../api/statistics.js";
 import {getAllProducts, getTopProducts,getProductsAboutToEnd,getProductSpecific,addProduct,getProductsByName} from '../api/products.js'
+import { findTicket } from "../api/sales.js";
 const AppContext = createContext(); 
 
 export const UseContextApp = ()=> useContext(AppContext);
@@ -15,7 +16,6 @@ export function AppProvider({children}){
     try {
       setLoading(true);
       const data = await getStadisticGeneral();
-      
       return data.data
       
     } catch (error) {
@@ -32,12 +32,27 @@ export function AppProvider({children}){
         const data = await getProductsByName(name);
         return data.data;
       }else{
-        console.log("no hay nada")
+        return []
       }
     } catch (error) {
       setError('Hubo un error al cargar los productos');
     }finally{
       setLoading(false);
+    }
+  })
+
+  const findTickets = useCallback(async (value)=>{
+    try {
+      setLoading(true);
+      let data = [];
+      if(value.match(/[-\/]/g)){
+        data = await findTicket("saleDate",value);
+        return data.data;
+      }
+      data = await findTicket("ticketNumber",value);
+      return data.data;
+    } catch (error) {
+      return error;      
     }
   })
 
@@ -52,6 +67,7 @@ export function AppProvider({children}){
       setLoading(false);
     }
   }
+
 
   const getProducts = async ()=>{
     try{
@@ -111,6 +127,7 @@ export function AppProvider({children}){
       setIsNewProduct,
       isNewProduct,
       findProductsByName,
+      findTickets,
       isLoading,
       error
     }}>

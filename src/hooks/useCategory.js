@@ -10,10 +10,9 @@ export const useCategory = () => {
     async function getCategories() {
       try {
         const res = await getAllCategories();
-        console.log(res);
         setCategories(res);
       } catch (error) {
-        console.log("error no se han obtenido las categorias");
+        return error;
       }
     }
 

@@ -14,7 +14,6 @@ export default function InfoSale() {
     async function getSale(){
       try {
         const res = await getSalesById(id);
-        console.log(res)
         setSale(res);
       } catch (error) {
         setError(error);

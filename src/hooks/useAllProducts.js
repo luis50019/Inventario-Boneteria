@@ -12,7 +12,6 @@ export const useAllProducts = () => {
       try {
         setLoadingProducts(true)
         const data = await getProducts();
-        console.log(data);
         setProducts(data);
       } catch (e) {
         setErrorProducts("hubo un error al obtener los productos");

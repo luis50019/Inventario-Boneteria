@@ -5,7 +5,7 @@ import Input from "../components/UI/Input";
 import { MdCancel } from "react-icons/md";
 import { useFindProduct } from "../hooks/useFindProduct";
 export default function ModalAddSale({addProductToList,closeModal,productToUpdate = null }) {
-  const {getProductsByName,productsFind} = useFindProduct();
+  const {getProductsByName,productsFind,setProductsFind} = useFindProduct();
   const [productSelect, setProductSelect] = useState(null);
   const [error, setError] = useState("");
   const [total, setTotal] = useState(0);
@@ -29,7 +29,7 @@ export default function ModalAddSale({addProductToList,closeModal,productToUpdat
 
     if(totalUnits > parseInt(product?.availableUnits)){
       setError("No hay suficientes prendas en existencia");
-      return ;
+      return 0.0;
     }
     setError("")
     let valueTotal  
@@ -49,14 +49,14 @@ export default function ModalAddSale({addProductToList,closeModal,productToUpdat
     const dozen = parseInt(valueDozen) || 0;
     
     // validate if the product has a discount
-    let valueTotal = calculateTotal(units,dozen,productSelect);  
-    
+    let valueTotal = calculateTotal(units,dozen,productSelect,discount);    
     setTotal(parseFloat(valueTotal));
   },[valueUnits,valueDozen])
 
   useEffect(()=>{
     const units = parseInt(valueUnits) || 0 ;
     const dozen = parseInt(valueDozen) || 0;
+
     // validate if the product has a discount
     let valueTotal = calculateTotal(units,dozen,productSelect,discount);
     setTotal(parseFloat(valueTotal));
@@ -148,6 +148,11 @@ export default function ModalAddSale({addProductToList,closeModal,productToUpdat
     setError("")
   }
 
+  const handlerSelectProduct =(product)=>{
+    setProductSelect(product);
+    setProductsFind([])
+  }
+
   return (
     <>
       <div className="z-20 absolute left-0 top-0 flex justify-center min-w-[100vw] min-h-[100vh] border-2 max-w-[100vw] bg-[#00000069]">
@@ -160,7 +165,9 @@ export default function ModalAddSale({addProductToList,closeModal,productToUpdat
           </span>
           <Search
             placeholder={"Producto a buscar"}
-            selectProduct={setProductSelect}
+            selectProduct={handlerSelectProduct}
+            getData={getProductsByName}
+            data={productsFind}
           />
           <form
             onSubmit={handleSubmit(handlerOnSubmit)}

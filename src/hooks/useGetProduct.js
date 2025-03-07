@@ -10,7 +10,6 @@ const useGetProduct = (id) => {
     const fetchProduct = async () => {
       try {
         const data = await getProduct(id);
-        console.log("deade: ",data);
         setProduct(data);
       } catch (error) {
         setError("Hubo un error al cargar el producto");

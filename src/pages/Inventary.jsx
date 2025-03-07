@@ -10,14 +10,22 @@ import Slider from "../components/Sliders/Slider.jsx";
 import TopProductSlider from "../components/Sliders/TopProductSlider.jsx";
 import ProductManagement from "../components/Management/ProductManagement.jsx";
 import ProductsAboutToEndSlider from "../components/Sliders/ProductsAboutToEndSlider.jsx";
+import { useFindProduct } from "../hooks/useFindProduct.js";
+import { useNavigate } from "react-router";
 
 export default function Inventary() {
   const { InfoInventary, errorInfo, isLoadingInfo } = useInfoInventary();
   const { products, errorProducts,loadigProducts } = useAllProducts();
+  const {getProductsByName,productsFind,setProductsFind} = useFindProduct();
+  const navigate = useNavigate();
+  const handlerSelectProduct =(product)=>{
+    setProductsFind([]);
+    navigate(`/Inventary/${product._id}`);
+  }
 
   return (
     <>
-      <Search placeholder="calceta deportica,llavero marvel, llavero de plastico ..." />
+      <Search getData={getProductsByName} data={productsFind} selectProduct={handlerSelectProduct} placeholder="calceta deportica,llavero marvel, llavero de plastico ..." />
       <Slider height={"64"}>
         {isLoadingInfo ? (
           <p className="text-xl h-full pt-28 font-extralight">Cargando Informacion del inventario...</p>
