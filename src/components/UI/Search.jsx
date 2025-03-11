@@ -55,7 +55,7 @@ export function Search({
             location.pathname == "/sale/newSale" ? "translate-y-[9rem]" : ""
           } flex flex-col min-h-[25rem] max-h-[25rem] overflow-y-auto w-[95%] z-30 rounded-2xl bg-[#fff] shadow-2xl px-4`}
         >
-          {data?.images
+          {data[0].productName
             ? data.map((product) => (
                 <div
                   key={product._id}

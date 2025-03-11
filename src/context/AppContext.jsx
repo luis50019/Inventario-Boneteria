@@ -30,6 +30,7 @@ export function AppProvider({children}){
       setLoading(true);
       if(name){
         const data = await getProductsByName(name);
+        console.log(data.data)
         return data.data;
       }else{
         return []
